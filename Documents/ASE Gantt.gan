@@ -5,8 +5,7 @@
         <field id="tpd4" name="Begin date" width="177" order="1"/>
         <field id="tpd5" name="End date" width="179" order="2"/>
         <field id="tpc0" name="Assignee" width="116" order="3"/>
-        <option id="taskLabelUp" value=""/>
-        <option id="taskLabelLeft" value="length"/>
+        <option id="taskLabelUp" value="length"/>
         <option id="color.recent"><![CDATA[#0066ff]]></option>
     </view>
     <view id="resource-table">
@@ -88,6 +87,9 @@
             </task>
             <task id="100" name="GUI Class" color="#8cb6ce" meeting="false" start="2019-02-01" duration="5" complete="0" thirdDate="2019-01-21" thirdDate-constraint="0" expand="true">
                 <customproperty taskproperty-id="tpc0" value="Shayne"/>
+            </task>
+            <task id="103" name="Progress Meeting" color="#8cb6ce" meeting="false" start="2019-02-04" duration="1" complete="0" thirdDate="2019-01-21" thirdDate-constraint="0" expand="true">
+                <customproperty taskproperty-id="tpc0" value="ALL"/>
             </task>
         </task>
         <task id="16" name="Iteration 2 - Add in food items &amp; Test Iteration 1" color="#0066ff" meeting="false" start="2019-02-05" duration="5" complete="0" thirdDate="2019-01-21" thirdDate-constraint="0" expand="true">
