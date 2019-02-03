@@ -14,7 +14,7 @@ public class Menu {
 	 * @param ID			desired Items unique ID
 	 * @return 			item		
 	 */ 
-	public Object getItems(int ID) {
+	public Object getItem(int ID) {
 		// TODO
 		return null;
 	}
