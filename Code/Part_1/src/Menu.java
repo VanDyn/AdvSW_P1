@@ -3,6 +3,8 @@ import java.util.HashSet;
 
 public class Menu {
 	
+	// Would TreeSet be a better choice?
+	// Allow sorting by item ID code
 	public HashSet<Object> menu;
 	
 	Menu(){
