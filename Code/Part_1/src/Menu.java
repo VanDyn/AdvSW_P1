@@ -1,24 +1,53 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.TreeSet;
-
+/**
+ * Class to create and access the coffee shops menu.
+ * 
+ * @author calumthompson
+ *
+ */
 public class Menu {
 	
 	// Would TreeSet be a better choice?
 	// Allow sorting by item ID code
-	public TreeSet<Object> menu;
+	private TreeSet<Object> menu;
 	
 	/**
 	 * Constructor reads in the menu .txt file and stores it in the [Selected data structure]
+	 * 
 	 * @param txtFile	name of the text file used to read in the menu
 	 */
 	Menu(String txtFile){
 		// TODO
+		
+		try {
+			
+		BufferedReader buff = new BufferedReader(new FileReader("exampleMenu.txt"));
+		Scanner scan = new Scanner(buff);
+		
+		while(scan.hasNextLine()) {
+			
+			String line = scan.nextLine();
+			String[] data = line.split(";");
+			
+			// create new item object using data
+			// add the object to the TreeSet
+		}
+		scan.close();
+		}catch(Exception e){
+			
+		}
 	}
 	
 	/** 
 	 * method to return a requested item object from the menu
+	 * 
 	 * @param ID			desired Items unique ID
 	 * @return 			item		
 	 */ 
@@ -28,7 +57,8 @@ public class Menu {
 	}
 	
 	/**
-	 * returns the price of a requested item
+	 * returns the price of a requested item.
+	 * 
 	 * @param ID			requested items unique ID		
 	 * @return			price
 	 */
@@ -39,7 +69,8 @@ public class Menu {
 	
 	/**
 	 * Returns an ArrayList of the menu descriptions.
-	 * Returned in order and format to be displayed in menu
+	 * Returned in order and format to be displayed in menu.
+	 * 
 	 * @return
 	 */
 	public ArrayList<Integer> menuList(){
@@ -49,7 +80,7 @@ public class Menu {
 	
 	/**
 	 * Returns a price list ordered by the ID codes
-	 * i.e in the order they appear in the menu
+	 * i.e in the order they appear in the menu.
 	 * 
 	 * @return			arrayList of all item prices
 	 */
@@ -59,7 +90,8 @@ public class Menu {
 	}
 	
 	/**
-	 * Returns an items details 
+	 * Returns an items details.
+	 * 
 	 * @param name		item identifier
 	 * @return			return item details in desired order
 	 */
@@ -70,6 +102,7 @@ public class Menu {
 	
 	/**
 	 * Returns a list containing the details of every item in that category.
+	 * 
 	 * @param			
 	 * @return
 	 */
@@ -79,7 +112,8 @@ public class Menu {
 	}
 	
 	/**
-	 * Returns all details needed to instantiate a new item object
+	 * Returns all details needed to instantiate a new item object.
+	 * 
 	 * @param name		accepts the item identifier. Preferably the item ID code
 	 * @return			returns [data structure/string with delimiter] with all item details
 	 */
