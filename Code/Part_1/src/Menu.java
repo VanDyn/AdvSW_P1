@@ -1,14 +1,20 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.TreeSet;
 
 public class Menu {
 	
 	// Would TreeSet be a better choice?
 	// Allow sorting by item ID code
-	public HashSet<Object> menu;
+	public TreeSet<Object> menu;
 	
-	Menu(){
-		
+	/**
+	 * Constructor reads in the menu .txt file and stores it in the [Selected data structure]
+	 * @param txtFile	name of the text file used to read in the menu
+	 */
+	Menu(String txtFile){
+		// TODO
 	}
 	
 	/** 
@@ -16,7 +22,7 @@ public class Menu {
 	 * @param ID			desired Items unique ID
 	 * @return 			item		
 	 */ 
-	public Object getItem(int ID) {
+	public Object getItemID(int description) {
 		// TODO
 		return null;
 	}
@@ -51,4 +57,36 @@ public class Menu {
 		// TODO
 		return null;
 	}
+	
+	/**
+	 * Returns an items details 
+	 * @param name		item identifier
+	 * @return			return item details in desired order
+	 */
+	public int get(String name) {
+		// TODO
+		return 0;
+	}
+	
+	/**
+	 * Returns a list containing the details of every item in that category.
+	 * @param			
+	 * @return
+	 */
+	public ArrayList<String> getCategoryMembers(String catID){
+		// TODO
+		return null;
+	}
+	
+	/**
+	 * Returns all details needed to instantiate a new item object
+	 * @param name		accepts the item identifier. Preferably the item ID code
+	 * @return			returns [data structure/string with delimiter] with all item details
+	 */
+	public ArrayList<String> itemDetails(String name){
+		// TODO
+		return null;
+	}
+	
+
 }
