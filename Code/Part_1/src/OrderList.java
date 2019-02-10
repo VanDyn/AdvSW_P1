@@ -3,48 +3,50 @@ package orderlist;
 import java.util.*;
 
 public class OrderList {
-
-	private Map<Integer,Order> orderList;
+     
+	private Map<String,Order> orderList;
 	private int orderNumber;
-	
+	private String apdOrdNum;
 	
 	public OrderList() {
-		orderList = new TreeMap<Integer,Order>();
+		orderList = new TreeMap<String,Order>();
 		orderNumber = 0;
 	}
 	
 	//Place an order 
-	public void addOrder(String custId, LinkedList<String> itemList) {
-		Order newOrder = new Order(custId, itemList);
-		orderList.put(orderNumber, newOrder);
+	public void addOrder(Order order) {
+	
+		if(orderNumber < 10) apdOrdNum = "C00";
+		else if (orderNumber < 100) apdOrdNum = "C0";
+		else apdOrdNum = "C";
+		apdOrdNum = apdOrdNum + orderNumber;
+		orderList.put(apdOrdNum, order);
 		orderNumber++;
 	}
 	
 	//Print all orders and return map of all orders placed
-	public Map<Integer,Order> getOrders() {
+	public Map<String,Order> getOrders() {
 		for(Order o: orderList.values()) {
-			System.out.println(o.getItemList());
+			System.out.println(o.getUniqueID() + " " + o.getItemList());
 		}
 		return orderList;
 	}
 	
 	//Return specific order using the order number
-	public Order getOrder(int orderNumber) {
+	public Order getOrder(String orderNumber) {
 		return orderList.get(orderNumber);
 	}
 	
 	public static void main(String[] args) {
 		
-		LinkedList<String> itemList = new LinkedList<String>();
-		OrderList ol = new OrderList();
+		OrderList oL = new OrderList();
+		LinkedList<String> order = new LinkedList<String>();
 		
-		itemList.add("Coffee");
-		itemList.add("Tea");
+		order.add("Coffee");
+		order.add("Tea");
+		Order o1 = new Order("C001", order);
+		oL.addOrder(o1);
 		
-		ol.addOrder("C001", itemList);
-		ol.addOrder("C002", itemList);
-		ol.getOrders();
-		
-		
+		oL.getOrders();
 	}
 }
