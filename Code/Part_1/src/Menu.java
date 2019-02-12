@@ -51,10 +51,10 @@ public class Menu {
 			String line = scan.nextLine();
 			data = line.split(";");
 			
-			String description = data[0];
-			String cost = data[1];
-			String category = data[2];
-			String ID = data[3];
+			String ID = data[0];
+			double cost = Double.parseDouble(data[1]);
+			String description = data[2];
+			String category = data[3];
 			
 			
 			MenuItem item = new MenuItem(ID,cost,description,category);
@@ -157,7 +157,7 @@ public class Menu {
 	 * @param			order item details
 	 * @return			true/false
 	 */
-	public boolean inMenu(String description, String price, String category, String ID) {
+	public boolean inMenu(String description, double price, String category, String ID) {
 		
 		MenuItem tempItem = new MenuItem(description,price,category,ID);
 		boolean valid = false;
@@ -176,9 +176,9 @@ public class Menu {
 	 * @param description		items description
 	 * @return cost				specified items cost
 	 */
-	public String getItemCost(String description) {
+	public double getItemCost(String description) {
 		Iterator<MenuItem> itr = this.menu.iterator();
-		String cost = new String();
+		double cost = 0;
 		
 		while(itr.hasNext()) {
 			if(itr.next().getDescription() == description) {
@@ -195,7 +195,7 @@ public class Menu {
 	private String itemDetails(MenuItem item) {
 		
 		String description = item.getDescription();
-		String price = item.getCost();
+		double price = item.getCost();
 		String category = item.getCategory();
 		String id = item.getID();
 		

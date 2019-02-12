@@ -1,2 +1,3 @@
-Americano;2.60;coffee;COF101
-Latte;3.00;coffee;COF102
+COF101;2.60;Americano;Coffee
+COF102;3.00;Latte;Coffee
+COF103;2.10;Espresso;Coffee
