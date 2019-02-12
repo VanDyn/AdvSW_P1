@@ -1,2 +1,1 @@
-101;Americano;2.30
-102;Latte;2.65 
+Americano;2.60;coffee;COF101
