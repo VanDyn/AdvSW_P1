@@ -30,7 +30,7 @@ public class Menu {
 	 * PST - Pastries
 	 * 
 	 */
-	private HashSet<Object> menu;
+	private HashSet<MenuItem> menu;
 	 
 	
 	/**
@@ -39,8 +39,7 @@ public class Menu {
 	 * @param txtFile	name of the text file used to read in the menu
 	 */
 	Menu(String txtFile){
-		// TODO
-		
+		this.menu = new HashSet<MenuItem>();
 		try {
 			
 		BufferedReader buff = new BufferedReader(new FileReader("exampleMenu.txt"));
@@ -57,10 +56,10 @@ public class Menu {
 			String category = data[2];
 			String ID = data[3];
 			
-			System.out.println(ID);
 			
-			// create new item object using data
-			// add the object to the [data structure]
+			MenuItem item = new MenuItem(ID,cost,description,category);
+			this.menu.add(item);
+				
 		}
 		
 		scan.close();
@@ -70,8 +69,6 @@ public class Menu {
 	}
 	
 	
-	
-
 	
 	/**
 	 * Returns all details needed to instantiate a new item object.
@@ -83,7 +80,7 @@ public class Menu {
 	public String newItemDetails(String description){
 		
 		String items = new String();
-		Iterator<Object> itr = menu.iterator();
+		Iterator<MenuItem> itr = this.menu.iterator();
 				
 		 // loop through each member of menu set. 
 		while(itr.hasNext()) {
@@ -100,40 +97,11 @@ public class Menu {
 	
 	
 	
-	
-	
 	/**
 	 * Returns a list containing the details of every item in that category.
 	 * 
-	 * Search menu for members of a specified category.
+	 * 			-->[Description;Price;Category;ID]<--
 	 * 
-	 * @param category		Specify which category to retrieve members from		
-	 * @return				ArrayList of item objects
-	 */
-	public ArrayList<Object> getCategoryMembers(String category){
-		
-		ArrayList<Object> items = new ArrayList<Object>();
-		Iterator<Object> itr = menu.iterator();
-		
-		// loop through each member of menu set.
-		// if the first three
-		while(itr.hasNext()) {
-			
-			if(itr.next().getCategory == category) {
-				items.add(itr.next());
-			}
-		}
-		
-		return items;
-	}
-	
-	
-	
-	
-	
-	/**
-	 * Returns a list containing the details of every item in that category.
-	 * -->[Description;Price;Category;ID]
 	 * Search menu for members of a specified category.
 	 * 
 	 * @param category		category to return details of			
@@ -142,11 +110,11 @@ public class Menu {
 	public ArrayList<String> getCategoryDetails(String category){
 		
 		ArrayList<String> itemDeets = new ArrayList<String>();
-		ArrayList<Object> categoryItems = getCategoryMembers(category);
-			
+		ArrayList<MenuItem> categoryItems = getCategoryMembers(category);
+		
 		// loop through each member of menu set.
-		// if the first three
-		for(Object item: categoryItems) {
+		
+			for(MenuItem item: categoryItems) {
 			itemDeets.add(itemDetails(item));
 		}
 		
@@ -155,6 +123,30 @@ public class Menu {
 	
 	
 	
+	/**
+	 * Returns a list containing the details of every item in that category.
+	 * 
+	 * Search menu for items of a specified category.
+	 * 
+	 * @param category		Specify which category to retrieve members from		
+	 * @return				ArrayList of item objects
+	 */
+	public ArrayList<MenuItem> getCategoryMembers(String category){
+
+		ArrayList<MenuItem> items = new ArrayList<MenuItem>();
+		Iterator<MenuItem> itr = this.menu.iterator();
+
+		// loop through each member of menu set.
+		while(itr.hasNext()) {
+			MenuItem item = itr.next();
+			
+			if(item.getCategory().equals(category)) {
+				items.add(item);
+			}
+		}
+		
+		return items;
+	}
 	
 	
 	/**
@@ -167,23 +159,14 @@ public class Menu {
 	 */
 	public boolean inMenu(String description, String price, String category, String ID) {
 		
-		menuItem tempItem = new menuItem(description,price,category,ID);
-		Iterator<Object> itr = menu.iterator();
+		MenuItem tempItem = new MenuItem(description,price,category,ID);
 		boolean valid = false;
 		
 		
 		if(menu.contains(tempItem)) {
 			valid = true;
 		}
-		
-//		while(itr.hasNext()) {
-//			if(itr.next().getDescription() == description) {
-//				valid = true;
-//				break;
-//			}
-//		}
 		 
-		
 		return valid;
 	}
 	
@@ -194,8 +177,8 @@ public class Menu {
 	 * @return cost				specified items cost
 	 */
 	public String getItemCost(String description) {
-		Iterator<Object> itr = menu.iterator();
-		String cost;
+		Iterator<MenuItem> itr = this.menu.iterator();
+		String cost = new String();
 		
 		while(itr.hasNext()) {
 			if(itr.next().getDescription() == description) {
@@ -209,10 +192,10 @@ public class Menu {
 	/**
 	 * Return a string of an items details.
 	 */
-	private String itemDetails(Object item) {
+	private String itemDetails(MenuItem item) {
 		
 		String description = item.getDescription();
-		int price = item.getPrice();
+		String price = item.getCost();
 		String category = item.getCategory();
 		String id = item.getID();
 		
@@ -221,6 +204,9 @@ public class Menu {
 		return itemDetails;
 	}
 	
+	public int getMenuSize() {
+		return this.menu.size();
+	}
 
 	
 

@@ -1,1 +1,2 @@
 Americano;2.60;coffee;COF101
+Latte;3.00;coffee;COF102
