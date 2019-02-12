@@ -22,12 +22,14 @@ public class CafeGUI extends JFrame implements ActionListener{
 	
 	// to be used to assign customer number.
 	int counter;
-	
+	// boolean to make sure that a new customer has been created for each order.
+	private boolean customerCreated;
 	
 	// Later will be public CafeGUI(Menu menu)
 	public CafeGUI(){
 		
 		this.menu = menu;
+		customerCreated = false;
 		
 		// set up window title and ensure program ends on close
         setTitle("Caffeine Addicts & Co");
@@ -69,6 +71,7 @@ public class CafeGUI extends JFrame implements ActionListener{
         
         tillDisplay = new JTextArea(15,20);
         tillDisplay.setFont(new Font (Font.MONOSPACED, Font.PLAIN,14));
+        tillDisplay.setLineWrap(true);
         tillDisplay.setEditable(false);
         scrollDisplay = new JScrollPane(tillDisplay);
         middlePanel.add(scrollDisplay);
@@ -122,6 +125,7 @@ public class CafeGUI extends JFrame implements ActionListener{
 		
 		if (e.getSource() == newCustomer){
 			
+			tillDisplay.append("        New Customer "+ "");
 			// create a new customer ID and write this to the display
 			// throws and error if a customer ID is in use and has not been completed
 		}
@@ -133,6 +137,7 @@ public class CafeGUI extends JFrame implements ActionListener{
 		}
 		else if (e.getSource() == espresso){
 			
+			tillDisplay.append("\n" + "   Espresso");
 			// add an espresso to the customers order
 			// throw an error if no customer is selected
 			// throw and error if it is a customer whose order has already been totalled
@@ -140,16 +145,19 @@ public class CafeGUI extends JFrame implements ActionListener{
 		}
 		else if (e.getSource() == americano){
 			
+			tillDisplay.append("\n"+"   Americano");
 			// as above
 			
 		}
 		else if (e.getSource() == cappuccino){
 			
+			tillDisplay.append("\n"+"   Cappuccino");
 			// as above
 			
 		}
 		else if (e.getSource() == latte){
 			
+			tillDisplay.append("\n"+"   Latte");
 			// as above
 			
 		}
