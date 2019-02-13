@@ -1,119 +1,131 @@
 
-// Import all Java GUI classes
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import javax.swing.*;
 
 public class CafeGUI extends JFrame implements ActionListener{
 
 	// This is where the info will be drawn from
 	private Menu menu;
+	private ArrayList<MenuItem> drinks;
+		
+	// Buttons and fields for Panel 1
+	private JButton newCustomer;
+	private JLabel welcome;
 	
-	// Buttons and fields for the top panel
-	JButton newCustomer, search;
-	JTextField searchCustomer;
+	// The main display, Panel 2
+	private JTextArea tillDisplay;
+	private JScrollPane scrollDisplay;
 	
-	// The main display (middle panel)
-	JTextArea tillDisplay;
-	JScrollPane scrollDisplay;
+	// Buttons for the Panel 3
+	private JButton[] drinksButtons;
 	
-	// Buttons for the bottom panel
-	JButton espresso, americano, cappuccino, latte, customerTotal, dailyTotal;
+	// Admin buttons for Panel 4
+	JButton customerTotal, cancel, confirm, dailyTotal;
 	
 	// to be used to assign customer number.
 	int counter;
-	// boolean to make sure that a new customer has been created for each order.
-	private boolean customerCreated;
 	
-	// Later will be public CafeGUI(Menu menu)
+	// booleans to act as checks
+	private boolean customerCreated;
+	private boolean totalled;
+	private boolean cancelled;
+	private boolean endOfDay;
+		
+	// for formatting
+	private String format = "%1$10s %2$-60s";
+	private String output;
+		
+	// linked list for order
+	private LinkedList<MenuItem> currentOrder;
+	
+	// To keep track of totals
+	private int buttonTotal;
+	private int orderTotal;
+	private int grandTotal;
+	
+	
+	// Later will be public Cafe2(Menu menu)
 	public CafeGUI(){
 		
-		this.menu = menu;
+		// booleans
 		customerCreated = false;
+		totalled = false;
+		cancelled = false;
+		endOfDay = false;
+				
+		menu = new Menu();
+		drinks = menu.getCategoryMembers("Coffee");
+		buttonTotal = drinks.size();
 		
-		// set up window title and ensure program ends on close
+		drinksButtons = new JButton[drinks.size()];
+		
+		// set up window title and ensure program ends on close, create a container and layout
         setTitle("Caffeine Addicts & Co");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		// Create a container
 		Container content = getContentPane();
+		content.setLayout(new GridLayout(4,1));
 		
-		// Set the layout
-		content.setLayout(new BorderLayout());
-		
-		
-		// TOP PANEL contains button, button, text field
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new GridLayout(1,3));
-        topPanel.setBackground(Color.blue);
+		// Panel 1
+		JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayout(1,2));
         
+        welcome = new JLabel("Welcome to CA & Co");
+        welcome.setHorizontalAlignment(JLabel.CENTER);
+        welcome.setFont(new Font (Font.MONOSPACED, Font.PLAIN,16));
+        panel1.add(welcome);        
         newCustomer = new JButton("New Customer");
-        topPanel.add(newCustomer);
+        panel1.add(newCustomer);
+        content.add(panel1);
         
-        searchCustomer = new JTextField(20);
-        topPanel.add(searchCustomer);   
-        
-        search = new JButton("Search");  
-        topPanel.add(search);  
-             
-        // add listeners to the buttons
-        newCustomer.addActionListener(this) ;
-        search.addActionListener(this) ;
-		  
-        // add topPanel to the content pane      
-        content.add(topPanel, BorderLayout.NORTH);
-        
-        
-        // MAIN DISPLAY contains JTextArea
-        JPanel middlePanel = new JPanel();
-        middlePanel.setLayout(new GridLayout(1,1));
-        middlePanel.setBackground(Color.green);
+        // Panel 2
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayout(1,1));
         
         tillDisplay = new JTextArea(15,20);
-        tillDisplay.setFont(new Font (Font.MONOSPACED, Font.PLAIN,14));
-        tillDisplay.setLineWrap(true);
+        tillDisplay.setFont(new Font (Font.MONOSPACED, Font.PLAIN,16));
+        tillDisplay.setLineWrap(true);                                    // possibly unnecessary
         tillDisplay.setEditable(false);
         scrollDisplay = new JScrollPane(tillDisplay);
-        middlePanel.add(scrollDisplay);
+        panel2.add(scrollDisplay);
+        content.add(panel2);
         
-        content.add(middlePanel, BorderLayout.CENTER);
+        // Panel 3
+        JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayout(1,3));
+              
+        for(counter=0; counter<drinks.size(); counter++){
+        	//System.out.println(drinks.get(counter).getDescription());
+        	drinksButtons[counter] =  new JButton(drinks.get(counter).getDescription() + "  £" + drinks.get(counter).getCost());
+        	drinksButtons[counter].addActionListener(this);
+        	panel3.add(drinksButtons[counter]);
+        }
+        content.add(panel3);
         
-        
-        // BOTTOM PANEL contains button, button, text field
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new GridLayout(2,3));
-        bottomPanel.setBackground(Color.yellow);
-        
-        espresso = new JButton("Espresso");
-        bottomPanel.add(espresso);
-        
-        americano = new JButton("Americano");  
-        bottomPanel.add(americano);  
-        
-        cappuccino = new JButton("Cappuccino");
-        bottomPanel.add(cappuccino);
-        
-        latte = new JButton("Latte");  
-        bottomPanel.add(latte);  
-        
+        // Panel 4
+        JPanel panel4 = new JPanel();
+        panel4.setLayout(new GridLayout(2,2));
+              
         customerTotal = new JButton("Total");
-        bottomPanel.add(customerTotal);
+        panel4.add(customerTotal);        
+        cancel = new JButton("Cancel");  
+        panel4.add(cancel);          
+        dailyTotal = new JButton("Gross");
+        panel4.add(dailyTotal);        
+        confirm = new JButton("Confirm");  
+        panel4.add(confirm);
+        content.add(panel4);
         
-        dailyTotal = new JButton("Gross");  
-        bottomPanel.add(dailyTotal);  
-                
         // add listeners to the buttons
-        espresso.addActionListener(this);
-        americano.addActionListener(this);
-        cappuccino.addActionListener(this);
-        latte.addActionListener(this);
+        newCustomer.addActionListener(this);
         customerTotal.addActionListener(this);
+        cancel.addActionListener(this);
         dailyTotal.addActionListener(this);
-        
-        // add bottomPanle to the content pane      
-        content.add(bottomPanel, BorderLayout.SOUTH);
-        
-        
+        confirm.addActionListener(this);
+              
         //pack and set visible
         pack();
         setVisible(true);
@@ -124,62 +136,92 @@ public class CafeGUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == newCustomer){
+			tillDisplay.setText(null);
 			
+			customerCreated = true;
 			tillDisplay.append("        New Customer "+ "");
+			currentOrder = new LinkedList<MenuItem>();
 			// create a new customer ID and write this to the display
 			// throws and error if a customer ID is in use and has not been completed
-		}
-		else if (e.getSource() == search){
-			
-			// look up a customer number and write their order to the display
-			// throws an error if 
-			
-		}
-		else if (e.getSource() == espresso){
-			
-			tillDisplay.append("\n" + "   Espresso");
-			// add an espresso to the customers order
-			// throw an error if no customer is selected
-			// throw and error if it is a customer whose order has already been totalled
-			
-		}
-		else if (e.getSource() == americano){
-			
-			tillDisplay.append("\n"+"   Americano");
-			// as above
-			
-		}
-		else if (e.getSource() == cappuccino){
-			
-			tillDisplay.append("\n"+"   Cappuccino");
-			// as above
-			
-		}
-		else if (e.getSource() == latte){
-			
-			tillDisplay.append("\n"+"   Latte");
-			// as above
-			
-		}
+		}		
 		else if (e.getSource() == customerTotal){
 			
+			totalled = true;
+			tillDisplay.append("\n" + "Please confirm that you want to TOTAL this order!");
 			// Show total on display
 			// Close off the order
 			// Throw an error if a new customer has not been created
 			// Throw an error if no items have been selected
 			
 		}
+		else if (e.getSource() == cancel){
+			
+			cancelled = true;
+			tillDisplay.append("\n" + "Please confirm that you want to CANCEL this order!");
+		}
 		else if (e.getSource() == dailyTotal){
 			
+			endOfDay = true;
+			tillDisplay.append("\n" + "Please confirm that you want to CLOSE FOR THE DAY!");
 			// Show daily total on display
 			// Throw an error if there are no orders 
 			
+		}
+		else if (e.getSource() == confirm){
+			
+			if((customerCreated = true) && (totalled = true) && (orderTotal > 0)){
+				
+				tillDisplay.append("\n" + "Order total = " + orderTotal);
+				grandTotal = grandTotal + orderTotal;
+				orderTotal = 0;
+				
+				// Add in the create order method here!!
+				
+				customerCreated = false;
+				totalled = false;
+				cancelled = false;
+				endOfDay = false;
+				
+			}
+			else if((customerCreated = true) && (cancelled = true)){
+				
+				tillDisplay.append("\n" + "This order has benn Cancelled");
+				currentOrder.clear();
+				orderTotal = 0;
+				
+				customerCreated = false;
+				totalled = false;
+				cancelled = false;
+				endOfDay = false;
+			}
+			else if((grandTotal > 0) && (endOfDay = true)){
+				tillDisplay.setText(null);
+				
+				tillDisplay.setText("\n" + "Todays takings are  £" + grandTotal);
+				
+				customerCreated = false;
+				totalled = false;
+				cancelled = false;
+				endOfDay = false;
+			}
+			// HAVING TROUBLE HERE. HOW DO I ITERATE THROUGH THESE DRINK BUTTONS AUTOMATICALLY?
+			else{  
+				
+				for(counter=0; counter<=buttonTotal; counter++){
+					if (e.getSource() == drinksButtons[counter]){
+						
+						output = String.format(format, drinks.get(counter).getDescription(), drinks.get(counter).getCost());
+						tillDisplay.append("\n"+ output);
+						currentOrder.add(drinks.get(counter));
+					}
+				}
+				
+			}
 		}
 		
 		
 	}
 
-	//System.out.println("Hello");
 }
 
 class TestGUI{
