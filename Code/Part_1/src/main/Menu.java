@@ -1,14 +1,12 @@
+package main;
+
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
-import java.util.TreeSet;
 /**
  * Class to create and access the coffee shops menu.
  * 
@@ -38,11 +36,11 @@ public class Menu {
 	 * 
 	 * @param txtFile	name of the text file used to read in the menu
 	 */
-	Menu(String txtFile){
+	public Menu(String txtFile){
 		this.menu = new HashSet<MenuItem>();
 		try {
 			
-		BufferedReader buff = new BufferedReader(new FileReader("exampleMenu.txt"));
+		BufferedReader buff = new BufferedReader(new FileReader(txtFile));
 		Scanner scan = new Scanner(buff);
 		String[] data = new String[4];
 		
@@ -84,9 +82,11 @@ public class Menu {
 				
 		 // loop through each member of menu set. 
 		while(itr.hasNext()) {
-			
-			if(itr.next().getDescription() == description) {
-				items = itemDetails(itr.next());
+			MenuItem item = itr.next();
+						
+			if(item.getDescription().equals(description)) {
+				
+				items = itemDetails(item);
 			}
 				
 			
@@ -157,13 +157,13 @@ public class Menu {
 	 * @param			order item details
 	 * @return			true/false
 	 */
-	public boolean inMenu(String description, double price, String category, String ID) {
+	public boolean inMenu(MenuItem item) {
 		
-		MenuItem tempItem = new MenuItem(description,price,category,ID);
+		//MenuItem tempItem = new MenuItem(description,price,category,ID);
 		boolean valid = false;
 		
 		
-		if(menu.contains(tempItem)) {
+		if(menu.contains(item)) {
 			valid = true;
 		}
 		 
@@ -181,7 +181,7 @@ public class Menu {
 		double cost = 0;
 		
 		while(itr.hasNext()) {
-			if(itr.next().getDescription() == description) {
+			if(itr.next().getDescription().equals(description)) {
 				cost = itr.next().getCost();
 			}
 		}
@@ -200,6 +200,8 @@ public class Menu {
 		String id = item.getID();
 		
 		String itemDetails = description + ";"+ price + ";" + category + ";"  + id;
+		
+		//System.out.println(itemDetails);
 		
 		return itemDetails;
 	}
