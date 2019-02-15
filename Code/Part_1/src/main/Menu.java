@@ -188,11 +188,31 @@ public class Menu {
 		return cost;
 	}
 	
+	/**
+	 * Returns the menu item with a certain ID
+	 * @param id			MenuItems ID
+	 * @return			MenuItem
+	 */
+	public MenuItem getItem(String id) {
+		
+		MenuItem item = null;
+		Iterator<MenuItem> itr = this.menu.iterator();
+		
+		while(itr.hasNext()) {
+			MenuItem temp = itr.next();
+			if(temp.getID().equals(id)) {
+				item = temp;
+			}
+		}
+		
+		return item;
+	}
+	
 	
 	/**
 	 * Return a string of an items details.
 	 */
-	private String itemDetails(MenuItem item) {
+	public String itemDetails(MenuItem item) {
 		
 		String description = item.getDescription();
 		double price = item.getCost();
@@ -205,6 +225,8 @@ public class Menu {
 		
 		return itemDetails;
 	}
+	
+	
 	
 	public int getMenuSize() {
 		return this.menu.size();
