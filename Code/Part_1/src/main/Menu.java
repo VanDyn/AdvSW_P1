@@ -188,19 +188,21 @@ public class Menu {
 		return cost;
 	}
 	
+
+	
 	/**
-	 * Returns the menu item with a certain ID
-	 * @param id			MenuItems ID
+	 * Returns the menu item with a certain description
+	 * @param id			MenuItems Category
 	 * @return			MenuItem
 	 */
-	public MenuItem getItem(String id) {
+	public MenuItem getItem(String description) {
 		
 		MenuItem item = null;
 		Iterator<MenuItem> itr = this.menu.iterator();
 		
 		while(itr.hasNext()) {
 			MenuItem temp = itr.next();
-			if(temp.getID().equals(id)) {
+			if(temp.getID().equals(description)) {
 				item = temp;
 			}
 		}
