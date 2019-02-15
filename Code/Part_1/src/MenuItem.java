@@ -11,7 +11,7 @@ public class MenuItem {
   private float cost;
   private String description;
 
-  // 
+  //  Constructor taking id, category, cost and description
   MenuItem(String id, String category, float cost, String description){
     this.id = id;
     this.cost = cost;
@@ -21,6 +21,10 @@ public class MenuItem {
 
   public String getID(){
     return id;
+  }
+
+  public String getCategory(){
+    return category;
   }
 
   public float getCost(){
