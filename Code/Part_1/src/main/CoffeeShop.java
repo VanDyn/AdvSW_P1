@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class CoffeeShop {
 
-	public static orderList orderList = new orderList();
+//	public static orderList orderList = new orderList();
 
 	LinkedList<MenuItem> ll;
 
@@ -92,19 +92,19 @@ public class CoffeeShop {
 
 				if(curr.equals(prev) || prev == null) {
 					ll.add(items.get(i));
-					System.out.println(menu.itemDetails(items.get(i)));
+				//	System.out.println(menu.itemDetails(items.get(i)));
 				}else {
-					Order order = new Order(prev,idTime[i-1][0],ll);
-					orderList.addOrders(order);
+				//	Order order = new Order(prev,idTime[i-1][0],ll);
+				//	orderList.addOrders(order);
 					//orderList.createOrder(ll, prev, idTime[i][0]);
 					ll.clear();
 					ll.add(items.get(i));
-					System.out.println(menu.itemDetails(items.get(i)));
+			//		System.out.println(menu.itemDetails(items.get(i)));
 
 				}
 				if(i == (idTime.length - 1)) {
-					Order order = new Order(prev,idTime[i-1][0],ll);
-					orderList.addOrders(order);
+				//	Order order = new Order(prev,idTime[i-1][0],ll);
+				//	orderList.addOrders(order);
 				}
 			}
 
@@ -113,11 +113,15 @@ public class CoffeeShop {
 			System.out.println("File not found");
 		}
 
+		CafeGUI test = new CafeGUI(menu);
+		test.setSize(600, 600);
+		test.setVisible(true);
+		
 	}
 
 	public void createOrder(LinkedList<MenuItem> items, String id) {
 		//Order order = new Order(id,items);
-		orderList.createOrder(items, id, "4");
+		//orderList.createOrder(items, id, "4");
 	}
 }
 
@@ -129,6 +133,14 @@ public class CoffeeShop {
 	//	ll.clear();
 	//}
 
+class Test {
+
+	public static void main(String[] args) {
+
+		CoffeeShop test = new CoffeeShop();
+
+	}
+}
 
 
 
