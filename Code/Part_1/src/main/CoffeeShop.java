@@ -13,8 +13,8 @@ public class CoffeeShop {
 //	public static orderList orderList = new orderList();
 
 	LinkedList<MenuItem> ll;
-
-	CoffeeShop(){
+	
+	public CoffeeShop(){
 
 		Menu menu = new Menu("examplemenu.txt");
 		ll = new LinkedList<MenuItem>(); 
@@ -119,9 +119,10 @@ public class CoffeeShop {
 		
 	}
 
-	public void createOrder(LinkedList<MenuItem> items, String id) {
+	public static void createOrder(LinkedList<MenuItem> items) {
 		//Order order = new Order(id,items);
 		//orderList.createOrder(items, id, "4");
+		System.out.println(items.size());
 	}
 }
 

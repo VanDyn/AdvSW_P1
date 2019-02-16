@@ -55,6 +55,9 @@ public class CafeGUI extends JFrame implements ActionListener {
 	private BigDecimal orderTotal;
 	private BigDecimal grandTotal;
 	private BigDecimal zero;
+	
+	//reference to coffeeshop 
+	private CoffeeShop cofS; 
 
 
 	/**
@@ -199,7 +202,8 @@ public class CafeGUI extends JFrame implements ActionListener {
 				orderTotal = zero;
 
 				// ADD THE ORDER METHOD HERE!!
-
+				CoffeeShop.createOrder(currentOrder);
+				
 				currentOrder.clear();       
 				customerCreated = false;
 				totalled = false;
