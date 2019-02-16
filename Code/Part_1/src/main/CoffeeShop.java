@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class CoffeeShop {
 
-//	public static orderList orderList = new orderList();
+	public static OrderList orderList = new OrderList();
 
 	LinkedList<MenuItem> ll;
 	
@@ -42,8 +42,6 @@ public class CoffeeShop {
 				itemDetails.add(data[1]);
 
 			}
-//			System.out.println(orderDetails.size());
-//			System.out.println(orderDetails.get(3));
 
 			// split order details
 			String[][] idTime = new String[orderDetails.size()][orderDetails.size()];
@@ -55,8 +53,6 @@ public class CoffeeShop {
 
 				idTime[i][0] = data[0];
 				idTime[i][1] = data[1];
-				
-
 			}
 			
 			
@@ -73,8 +69,6 @@ public class CoffeeShop {
 				
 				items.add(menu.getItem(data[0]));
 			}
-			
-//			System.out.println(menu.itemDetails(items.get(1)));
 			// check number of individual orders
 			
 // -------------------------------------------------------------------------------------------------
@@ -94,8 +88,8 @@ public class CoffeeShop {
 					ll.add(items.get(i));
 				//	System.out.println(menu.itemDetails(items.get(i)));
 				}else {
-				//	Order order = new Order(prev,idTime[i-1][0],ll);
-				//	orderList.addOrders(order);
+					Order order = new Order(prev,idTime[i-1][0],ll);
+					orderList.addOrder(order);
 					//orderList.createOrder(ll, prev, idTime[i][0]);
 					ll.clear();
 					ll.add(items.get(i));
@@ -103,8 +97,8 @@ public class CoffeeShop {
 
 				}
 				if(i == (idTime.length - 1)) {
-				//	Order order = new Order(prev,idTime[i-1][0],ll);
-				//	orderList.addOrders(order);
+					Order order = new Order(prev,idTime[i-1][0],ll);
+					orderList.addOrder(order);
 				}
 			}
 
@@ -120,9 +114,9 @@ public class CoffeeShop {
 	}
 
 	public static void createOrder(LinkedList<MenuItem> items) {
-		//Order order = new Order(id,items);
-		//orderList.createOrder(items, id, "4");
-		System.out.println(items.size());
+		Order order = new Order(items);
+		orderList.addOrder(order);
+		System.out.println(orderList.getNumberOfOrders());
 	}
 }
 

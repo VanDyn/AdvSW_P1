@@ -1,4 +1,4 @@
-package orderList;
+package main;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,14 +7,20 @@ import java.util.LinkedList;
 public class Order implements Comparable<Order>
 {
 	private String timeStamp;
-	private String UniqueID;
 	private LinkedList<MenuItem> itemList;
+	private String ID;
 	
-	public Order(String custId, LinkedList<MenuItem> Items) //Strings in linkedList to be changed to object menuItem
+	public Order(LinkedList<MenuItem> Items) //Strings in linkedList to be changed to object menuItem
 	{	
 		this.itemList = Items;
 		this.timeStamp = this.makeTimeStamp();
-		this.UniqueID = custId;
+	}
+	
+	public Order(String custID, String tStamp, LinkedList<MenuItem> link){
+		this.ID = custID;
+		this.timeStamp = tStamp;
+		this.itemList = link;
+		
 	}
 	private String makeTimeStamp()
 	{
@@ -26,10 +32,6 @@ public class Order implements Comparable<Order>
 	public String getTimeStamp()
 	{
 		return this.timeStamp;
-	}
-	public String getUniqueID()
-	{
-		return this.UniqueID;
 	}
 	public LinkedList<MenuItem> getItemList()
 	{

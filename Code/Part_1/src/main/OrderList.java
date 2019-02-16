@@ -1,4 +1,4 @@
-package orderlist;
+package main;
 
 import java.util.*;
 
@@ -16,9 +16,9 @@ public class OrderList {
 	//Place an order 
 	public void addOrder(Order order) {
 	
-		if(orderNumber < 10) apdOrdNum = "C00";
-		else if (orderNumber < 100) apdOrdNum = "C0";
-		else apdOrdNum = "C";
+		if(orderNumber < 10) apdOrdNum = "O00";
+		else if (orderNumber < 100) apdOrdNum = "O0";
+		else apdOrdNum = "O";
 		apdOrdNum = apdOrdNum + orderNumber;
 		orderList.put(apdOrdNum, order);
 		orderNumber++;
@@ -26,9 +26,12 @@ public class OrderList {
 	
 	//Print all orders and return map of all orders placed
 	public Map<String,Order> getOrders() {
+		
 		for(Order o: orderList.values()) {
-			System.out.println(o.getUniqueID() + " " + o.getItemList());
+			System.out.println(o.getItemList());
+			
 		}
+		System.out.println(orderList.toString());
 		return orderList;
 	}
 	
@@ -37,16 +40,7 @@ public class OrderList {
 		return orderList.get(orderNumber);
 	}
 	
-	public static void main(String[] args) {
-		
-		OrderList oL = new OrderList();
-		LinkedList<String> order = new LinkedList<String>();
-		
-		order.add("Coffee");
-		order.add("Tea");
-		Order o1 = new Order("C001", order);
-		oL.addOrder(o1);
-		
-		oL.getOrders();
+	public int getNumberOfOrders() {
+		return orderList.size();
 	}
 }

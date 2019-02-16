@@ -55,10 +55,6 @@ public class CafeGUI extends JFrame implements ActionListener {
 	private BigDecimal orderTotal;
 	private BigDecimal grandTotal;
 	private BigDecimal zero;
-	
-	//reference to coffeeshop 
-	private CoffeeShop cofS; 
-
 
 	/**
 	 * Constructor which will initialise the GUI container and populate both it and the JPanels
