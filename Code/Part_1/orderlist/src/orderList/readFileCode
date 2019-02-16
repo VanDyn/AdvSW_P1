@@ -1,0 +1,35 @@
+//Populate menu from text file. 
+	private void getPrevOrders() {
+		String filename = "/home/vandyn/eclipse-workspace/orderlist/src/orderlist/menuItems";
+		
+		try(BufferedReader prevOrders = new BufferedReader(new FileReader(filename))) {
+			
+			String str;
+			
+			while((str = prevOrders.readLine())!= null) {
+				//used to split item and code into separate objects
+				String[] line = str.split(":");
+				
+				String cusCode = line[0];
+				String ordCode = line[1];
+				String order = line[2];
+				
+				//System.out.println(cusCode+ordCode+order);
+				
+				String[] indivItem = order.split(",");
+				LinkedList<String> o = new LinkedList<String>();
+				for(String s: indivItem) {
+					System.out.println(s);
+					//o.add(s);
+				}
+				//addOrder(code, order);		
+			}		
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("menu file found but error reading");
+			e.printStackTrace();
+		}
+	}
