@@ -4,14 +4,16 @@ Contains id String, float cost and description String.
 *****/
 package main;
 
+import java.math.BigDecimal;
+
 public class MenuItem {
 
   private String id;
-  private double cost;
+  private BigDecimal cost;
   private String description;
   private String category;
 
-  MenuItem(String id, double cost, String description, String category){
+  MenuItem(String id, BigDecimal cost, String description, String category){
     this.id = id;
     this.cost = cost;
     this.description = description;
@@ -23,7 +25,7 @@ public class MenuItem {
     return id;
   }
 
-  public double getCost(){
+  public BigDecimal getCost(){
     return cost;
   }
 

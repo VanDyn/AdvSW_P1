@@ -10,11 +10,11 @@ import java.util.Scanner;
 
 public class CoffeeShop {
 
-	public static orderList orderList = new orderList();
+	public static OrderList orderList = new OrderList();
 
 	LinkedList<MenuItem> ll;
-
-	CoffeeShop(){
+	
+	public CoffeeShop(){
 
 		Menu menu = new Menu("examplemenu.txt");
 		ll = new LinkedList<MenuItem>(); 
@@ -42,8 +42,6 @@ public class CoffeeShop {
 				itemDetails.add(data[1]);
 
 			}
-//			System.out.println(orderDetails.size());
-//			System.out.println(orderDetails.get(3));
 
 			// split order details
 			String[][] idTime = new String[orderDetails.size()][orderDetails.size()];
@@ -55,8 +53,6 @@ public class CoffeeShop {
 
 				idTime[i][0] = data[0];
 				idTime[i][1] = data[1];
-				
-
 			}
 			
 			
@@ -73,8 +69,6 @@ public class CoffeeShop {
 				
 				items.add(menu.getItem(data[0]));
 			}
-			
-//			System.out.println(menu.itemDetails(items.get(1)));
 			// check number of individual orders
 			
 // -------------------------------------------------------------------------------------------------
@@ -92,19 +86,19 @@ public class CoffeeShop {
 
 				if(curr.equals(prev) || prev == null) {
 					ll.add(items.get(i));
-					System.out.println(menu.itemDetails(items.get(i)));
+				//	System.out.println(menu.itemDetails(items.get(i)));
 				}else {
 					Order order = new Order(prev,idTime[i-1][0],ll);
-					orderList.addOrders(order);
+					orderList.addOrder(order);
 					//orderList.createOrder(ll, prev, idTime[i][0]);
 					ll.clear();
 					ll.add(items.get(i));
-					System.out.println(menu.itemDetails(items.get(i)));
+			//		System.out.println(menu.itemDetails(items.get(i)));
 
 				}
 				if(i == (idTime.length - 1)) {
 					Order order = new Order(prev,idTime[i-1][0],ll);
-					orderList.addOrders(order);
+					orderList.addOrder(order);
 				}
 			}
 
@@ -113,11 +107,16 @@ public class CoffeeShop {
 			System.out.println("File not found");
 		}
 
+		CafeGUI test = new CafeGUI(menu);
+		test.setSize(600, 600);
+		test.setVisible(true);
+		
 	}
 
-	public void createOrder(LinkedList<MenuItem> items, String id) {
-		//Order order = new Order(id,items);
-		orderList.createOrder(items, id, "4");
+	public static void createOrder(LinkedList<MenuItem> items) {
+		Order order = new Order(items);
+		orderList.addOrder(order);
+		System.out.println(orderList.getNumberOfOrders());
 	}
 }
 
@@ -129,6 +128,14 @@ public class CoffeeShop {
 	//	ll.clear();
 	//}
 
+class Test {
+
+	public static void main(String[] args) {
+
+		CoffeeShop test = new CoffeeShop();
+
+	}
+}
 
 
 
