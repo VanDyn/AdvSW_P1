@@ -51,6 +51,7 @@ public class Menu {
 				String ID = data[0];
 				double temp = Double.parseDouble(data[1]);
 				BigDecimal cost = new BigDecimal(temp);
+				cost = cost.setScale(2,BigDecimal.ROUND_DOWN);
 				String description = data[2];
 				String category = data[3];
 
@@ -84,7 +85,6 @@ public class Menu {
 			MenuItem item = itr.next();
 
 			if (item.getDescription().equals(description)) {
-
 				items = itemDetails(item);
 			}
 
@@ -114,7 +114,7 @@ public class Menu {
 		for (MenuItem item : categoryItems) {
 			itemDeets.add(itemDetails(item));
 		}
-
+		
 		return itemDeets;
 	}
 
@@ -216,11 +216,8 @@ public class Menu {
 		BigDecimal price = item.getCost();
 		String category = item.getCategory();
 		String id = item.getID();
-
+		
 		String itemDetails = description + ";" + price + ";" + category + ";" + id;
-
-		// System.out.println(itemDetails);
-
 		return itemDetails;
 	}
 
