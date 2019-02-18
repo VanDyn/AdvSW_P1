@@ -3,7 +3,7 @@ package main;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 /**
- * Class to encapsulate the discounted total, amount of money saved, and 
+ * Class to encapsulate the discounted total, amount of money saved, and list of discounts used.
  * @author calumthompson
  *
  */
