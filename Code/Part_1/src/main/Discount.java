@@ -1,48 +1,34 @@
-
 package main;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
+import java.util.ArrayList;
 /**
- * Class for applying discount once customer has hit checkout
- * 
+ * Class to encapsulate the discounted total, amount of money saved, and 
  * @author calumthompson
  *
  */
 public class Discount {
+	private BigDecimal discountedTotal;
+	private BigDecimal savings;
+	private ArrayList<String> appliedDiscounts;
 	
-	Discount(){
-		
+	Discount(BigDecimal t, BigDecimal save, ArrayList<String> arrL){
+		this.discountedTotal = t;
+		this.appliedDiscounts = arrL;
+		this.savings = save;
 	}
 
-	/**
-	 * Applies the Discount "Buy two Americanos get a third free"
-	 * @param ll				finished LinkedList order
-	 * @param total			checkout total
-	 * @return				new discounted total
-	 */
-	public BigDecimal twoAmericanoDiscount(LinkedList<MenuItem> ll, BigDecimal total) {
-		
-		int discountedCount = 0;
-		BigDecimal itemCost = new  BigDecimal(1);
-		//BigDecimal discountCost = new  BigDecimal(1);
-		//BigDecimal itemMultiplier = new BigDecimal(2);
-		BigDecimal newTotal = new BigDecimal(0);
-		
-		for(int i = 0; i < ll.size(); i++) {
-			if(ll.get(i).getID().equals("COF101")){
-				discountedCount++;
-				itemCost = ll.get(i).getCost();
-			}
-		}
-		
-		// apply buy 2 get 1 free
-		if(discountedCount > 2) {
-			newTotal = total.subtract(itemCost);
-			return newTotal;
-		}
-		
-		return total;
+	public BigDecimal getNewTotal() {
+		return discountedTotal;
 	}
+	public BigDecimal getSavings() {
+		return savings;
+	}
+
+	public ArrayList<String> getAppliedDiscounts() {
+		return appliedDiscounts;
+	}
+
+	
 	
 }
