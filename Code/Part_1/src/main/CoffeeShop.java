@@ -10,7 +10,7 @@ public class CoffeeShop {
 		BigDecimal total = new BigDecimal(0);
 		
 		
-		Menu menu = new Menu("exampleMenu");
+		Menu menu = new Menu("exampleMenu");		
 		
 		LinkedList<MenuItem> item = new LinkedList<MenuItem>();
 		
@@ -20,7 +20,9 @@ public class CoffeeShop {
 		total = total.add(menu.getItemCost("Americano"));
 		item.add(menu.getItem("Blueberry Muffin"));
 		total = total.add(menu.getItemCost("Blueberry Muffin"));
-		
+		item.add(menu.getItem("Americano"));
+		total = total.add(menu.getItemCost("Blueberry Muffin"));
+
 		ApplyDiscount d = new ApplyDiscount(item,total);
 		Discount discount = d.checkForDiscounts();
 		

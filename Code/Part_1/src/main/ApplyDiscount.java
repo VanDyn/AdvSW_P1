@@ -5,7 +5,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 /**
- * Class for applying discount once customer has hit checkout
+ * Class for applying discount once customer has hit checkout.
+ * To use:
+ * 			> Create ApplyDiscount object, using the order LinkedList and order total as constructor arguments.
+ * 			> Call method checkForDiscounts() which returns an object of type Discount.
+ * 			> Discount object contains - the discounted total, customer savings, and the discounts applied.
+ * 		
  * 
  * @author calumthompson
  *
@@ -34,27 +39,32 @@ public class ApplyDiscount {
 	 */
 	public Discount checkForDiscounts() {	
 		
+		savings = savings.add(twoAmericanoDiscount());
+		savings = savings.add(twoCoffeesHalfPriceMuffin());
 		
-		/**
-		 * Apply discount methods.
-		 * Check which have been applied.
-		 * Max limit of discount that can be applied.
-		 * Only one free item
-		 * Only one 
-		 */
-		savings = twoAmericanoDiscount();
-		discountedTotal = discountedTotal.subtract(savings);
+		discountedTotal = currentTotal.subtract(savings);
 		
 		
 		Discount discount = new Discount(discountedTotal,savings, appliedDiscounts);
 		return discount;
 	}
 	
+	/*
+	 * Return an ArrayList with all available discounts.
+	 */
+	public ArrayList<String> getAvailableDiscounts(){
+		ArrayList<String> availableDiscounts = new ArrayList<String>();
+		availableDiscounts.add("Buy two Americanos get a third free");
+		availableDiscounts.add("Buy any two coffees get a free Blueberry muffin");
+		
+		return availableDiscounts;
+	}
+	
 	/**
 	 * Applies discount "Buy two coffees, get a muffin half price
 	 * @return savings			Return the amount of money saved 
 	 */
-	private BigDecimal twoCoffeesHalfMuffin() {
+	private BigDecimal twoCoffeesHalfPriceMuffin() {
 		
 		BigDecimal savings = new BigDecimal(0); // New total when applying this discount
 		int coffeeCount = 0; // Check how many coffees have been ordered
@@ -63,13 +73,14 @@ public class ApplyDiscount {
 		BigDecimal discountOperator = new BigDecimal(0.5);
 		
 		for(MenuItem item : orderedItems) {
-			if(item.getDescription().equals("Blueberry Muffin")) {
+			if(item.getDescription().equals("Blueberry Muffin") && muffinOrdered == false) {
 				muffinOrdered = true;
 				muffinCost = item.getCost();
 			}else if(item.getCategory().equals("Coffee")) {
 				coffeeCount++;
-			}else if(muffinOrdered && (coffeeCount >= 2)) { // If a muffin and two coffees have been ordered. Apply the discount
+			} if(muffinOrdered && (coffeeCount > 1)) { // If a muffin and two coffees have been ordered. Apply the discount
 				savings = muffinCost.multiply(discountOperator); 
+				appliedDiscounts.add("Buy two coffees get a free muffin");
 			}
 		}
 		
@@ -92,6 +103,7 @@ public class ApplyDiscount {
 			if(orderedItems.get(i).getID().equals("COF101")){
 				discountedCount++;
 				itemCost = orderedItems.get(i).getCost();
+				appliedDiscounts.add("Buy two Americanos get a third free");
 			}
 		}
 		

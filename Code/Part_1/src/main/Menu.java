@@ -211,14 +211,16 @@ public class Menu {
 		
 		while (itr.hasNext()) {
 			MenuItem temp = itr.next();
-			if (temp.getCategory().equals(description)) {
+			if (temp.getDescription().equals(description)) {
 				item = temp;
 				valid = true;
 			}
 		}
 		if(valid) {return item;}
-		else { throw new NotOnMenuException("Description", description);}
-		
+		else if(valid == false){ 
+			
+			throw new NotOnMenuException("Description", description);}
+		return null;
 	}
 
 	/**
