@@ -1,4 +1,4 @@
-java import.math.*;
+import java.math.*;
 
 /*****
 Class for holding data concerning menu items
@@ -10,7 +10,7 @@ public class MenuItem {
 
   private String id;
   private String category;
-  private float cost;
+  private BigDecimal cost;
   private String description;
 
   //  Constructor taking id, category, cost and description
