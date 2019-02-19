@@ -115,6 +115,36 @@ public class ApplyDiscount {
 		return savings;
 	}
 	
+	/**
+	 * Apply meal deal. Get and sandwich, drink, and baked good for £6
+	 * @return
+	 */
+	private BigDecimal mealDeal() {
+		
+		int sandwichCount = 0;
+		int drinkCount = 0;
+		int bakeryCount = 0;
+		
+		BigDecimal mealDealCost = new BigDecimal(0);
+		
+		for(MenuItem item : orderedItems) {
+			switch(item.getCategory()) {
+			case "Sandwich" :
+				sandwichCount++;
+			case "Coffee" :
+				drinkCount++;
+			case "Tea" :
+				drinkCount++;
+			case "Bakery" :
+				drinkCount++;
+			}
+		}
+		
+		
+		
+		return null;
+	}
+	
 	 
 	
 }
