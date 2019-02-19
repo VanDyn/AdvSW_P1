@@ -1,4 +1,5 @@
 package main;
+
 // Import all Java GUI classes
 import java.awt.*;
 import java.awt.event.*;
@@ -19,7 +20,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 	// This is where the info will be drawn from
 	private Menu menu;
-	private ArrayList<MenuItem> drinks;
+	private ArrayList<MenuItem> products;
 
 	// Buttons and fields for Panel 1
 	private JButton newCustomer;
@@ -30,7 +31,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 	private JScrollPane scrollDisplay;
 
 	// Buttons for the Panel 3
-	private JButton[] drinksButtons;
+	private JButton[] productButtons;
 
 	// Admin buttons for Panel 4
 	JButton customerTotal, cancel, confirm, dailyTotal;
@@ -57,23 +58,25 @@ public class CafeGUI extends JFrame implements ActionListener {
 	private BigDecimal zero;
 
 	/**
-	 * Constructor which will initialise the GUI container and populate both it and the JPanels
-	 * with buttons and text areas.
+	 * Constructor which will initialise the GUI container and populate both it
+	 * and the JPanels with buttons and text areas.
 	 * 
-	 * @param foodlist - a text file containing the items on the menu
+	 * @param foodlist
+	 *            - a text file containing the items on the menu
+	 * @throws NotOnMenuException
 	 * 
 	 */
-	public CafeGUI(Menu foodlist) {
-		
+	public CafeGUI(Menu foodlist) throws NotOnMenuException, CreateNewCustomerException {
+
 		orderTotal = new BigDecimal(0);
-		orderTotal.setScale(2,BigDecimal.ROUND_DOWN);
+		orderTotal.setScale(2, BigDecimal.ROUND_DOWN);
 		grandTotal = new BigDecimal(0);
-		grandTotal.setScale(2,BigDecimal.ROUND_DOWN);
+		grandTotal.setScale(2, BigDecimal.ROUND_DOWN);
 		zero = new BigDecimal(0);
-		zero.setScale(2,BigDecimal.ROUND_DOWN);
-		//orderTotal.setScale(2,BigDecimal.ROUND_DOWN);
-		//grandTotal.setScale(2,BigDecimal.ROUND_DOWN);
-		
+		zero.setScale(2, BigDecimal.ROUND_DOWN);
+		// orderTotal.setScale(2,BigDecimal.ROUND_DOWN);
+		// grandTotal.setScale(2,BigDecimal.ROUND_DOWN);
+
 		// Booleans
 		customerCreated = false;
 		totalled = false;
@@ -81,9 +84,12 @@ public class CafeGUI extends JFrame implements ActionListener {
 		endOfDay = false;
 
 		menu = foodlist;
-		drinks = menu.getCategoryMembers("Coffee");
+		products = menu.getCategoryMembers("Coffee");
+		products.addAll(menu.getCategoryMembers("Tea"));
+		products.addAll(menu.getCategoryMembers("Sandwich"));
+		products.addAll(menu.getCategoryMembers("Bakery"));
 
-		drinksButtons = new JButton[drinks.size()];
+		productButtons = new JButton[products.size()];
 
 		// Set up window title and ensure program ends on close, create a
 		// container and layout
@@ -96,9 +102,9 @@ public class CafeGUI extends JFrame implements ActionListener {
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(new GridLayout(1, 2));
 
-		welcome = new JLabel("Welcome to CA & Co");
+		welcome = new JLabel("Caffeine Addicts & Co");
 		welcome.setHorizontalAlignment(JLabel.CENTER);
-		welcome.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+		welcome.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 		panel1.add(welcome);
 		newCustomer = new JButton("New Customer");
 		panel1.add(newCustomer);
@@ -118,13 +124,13 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 		// Panel 3
 		JPanel panel3 = new JPanel();
-		panel3.setLayout(new GridLayout(1, 3));
+		panel3.setLayout(new GridLayout(4, 3));
 
-		for (counter = 0; counter < drinks.size(); counter++) {
-			
-			drinksButtons[counter] = new JButton(drinks.get(counter).getDescription()); 																																																																																								
-			drinksButtons[counter].addActionListener(this);
-			panel3.add(drinksButtons[counter]);
+		for (counter = 0; counter < products.size(); counter++) {
+
+			productButtons[counter] = new JButton(products.get(counter).getDescription());
+			productButtons[counter].addActionListener(this);
+			panel3.add(productButtons[counter]);
 		}
 		content.add(panel3);
 
@@ -157,39 +163,120 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 	/**
 	 * Determines the appropriate action for the GUI when any button is pressed.
-	 *  
+	 * 
 	 * @param ActionEvent
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
 
-		System.out.println(e.getActionCommand());
+		// System.out.println(e.getActionCommand());
 
 		if (e.getSource() == newCustomer) {
-			tillDisplay.setText(null);
 
-			customerCreated = true;
-			tillDisplay.append("        New Customer " + "");
-			currentOrder = new LinkedList<MenuItem>();
-			
+			try {
+				createNewCustomer();
+			} catch (OrderNotClosedException e1) {
+
+				e1.printStackTrace();
+				tillDisplay.append("\n" + "Please close the current order first!");
+			}
+
 		} else if (e.getSource() == customerTotal) {
 
-			totalled = true;
-			tillDisplay.append("\n" + "Please confirm that you want to TOTAL this order!");
-			
+			try {
+				setOrderTotalFlag();
+			} catch (SelectProductException e1) {
+
+				e1.printStackTrace();
+				tillDisplay.append("\n" + "Please select a product first!");
+
+			}
 
 		} else if (e.getSource() == cancel) {
 
-			cancelled = true;
-			tillDisplay.append("\n" + "Please confirm that you want to CANCEL this order!");
+			try {
+				setCancelOrderFlag();
+			} catch (SelectProductException e1) {
+
+				e1.printStackTrace();
+				tillDisplay.append("\n" + "Please select a product first!");
+			}
 
 		} else if (e.getSource() == dailyTotal) {
 
-			endOfDay = true;
-			tillDisplay.append("\n" + "Please confirm that you want to CLOSE FOR THE DAY!");
-			
+			try {
+				setGrandTotalFlag();
+			} catch (NoOrdersPlacedException e1) {
+
+				e1.printStackTrace();
+				tillDisplay.setText("No orders have been placed today!");
+			}
 
 		} else if (e.getSource() == confirm) {
+			try {
+				confirmOrder(e);
+			} catch (SelectFunctionException e1) {
+				e1.printStackTrace();
+				tillDisplay.append("\n" + "Please select a funtion first! Total, Cancel or Gross");
+			}
+
+		} else {
+			try {
+				selectProduct(e);
+			} catch (CreateNewCustomerException e1) {
+				e1.printStackTrace();
+				tillDisplay.setText("Please create a new customer first!");
+			}
+
+		}
+
+	}
+
+	private void createNewCustomer() throws OrderNotClosedException {
+
+		if (customerCreated == false) {
+			tillDisplay.setText(null);
+			customerCreated = true;
+			tillDisplay.append("        New Customer " + "");
+			currentOrder = new LinkedList<MenuItem>();
+		} else {
+			throw new OrderNotClosedException();
+		}
+	}
+
+	private void setOrderTotalFlag() throws SelectProductException {
+
+		if (orderTotal.compareTo(zero) > 0) {
+			totalled = true;
+			tillDisplay.append("\n" + "Please confirm that you want to TOTAL this order!");
+		} else {
+			throw new SelectProductException();
+		}
+	}
+
+	private void setCancelOrderFlag() throws SelectProductException {
+		if (orderTotal.compareTo(zero) > 0) {
+			cancelled = true;
+			tillDisplay.append("\n" + "Please confirm that you want to CANCEL this order!");
+		} else {
+			throw new SelectProductException();
+		}
+
+	}
+
+	private void setGrandTotalFlag() throws NoOrdersPlacedException {
+		if (grandTotal.compareTo(zero) > 0) {
+			endOfDay = true;
+			tillDisplay.append("\n" + "Please confirm that you want to CLOSE FOR THE DAY!");
+
+		} else {
+			throw new NoOrdersPlacedException();
+		}
+
+	}
+
+	private void confirmOrder(ActionEvent e) throws SelectFunctionException {
+		if (totalled == true || cancelled == true || endOfDay == true) {
 
 			if ((customerCreated == true) && (totalled == true) && (orderTotal.compareTo(zero) > 0)) {
 
@@ -197,10 +284,9 @@ public class CafeGUI extends JFrame implements ActionListener {
 				grandTotal = grandTotal.add(orderTotal);
 				orderTotal = zero;
 
-				// ADD THE ORDER METHOD HERE!!
 				CoffeeShop.createOrder(currentOrder);
-				
-				currentOrder.clear();       
+
+				currentOrder.clear();
 				customerCreated = false;
 				totalled = false;
 				cancelled = false;
@@ -216,8 +302,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 				totalled = false;
 				cancelled = false;
 				endOfDay = false;
-				
-				
+
 			} else if ((grandTotal.compareTo(zero) > 0) && (endOfDay == true)) {
 				tillDisplay.setText(null);
 
@@ -228,15 +313,24 @@ public class CafeGUI extends JFrame implements ActionListener {
 				cancelled = false;
 				endOfDay = false;
 			}
-			
 		} else {
-			
-			output = String.format(format, e.getActionCommand(), menu.getItemCost(e.getActionCommand()));
-			tillDisplay.append("\n" + output);
-			currentOrder.add(menu.getItem(e.getActionCommand()));
-			orderTotal = orderTotal.add(menu.getItemCost(e.getActionCommand()));
-			System.out.println(orderTotal);
+			throw new SelectFunctionException();
+		}
+	}
 
+	private void selectProduct(ActionEvent e) throws CreateNewCustomerException {
+		if (customerCreated == true) {
+			try {
+				output = String.format(format, e.getActionCommand(), menu.getItemCost(e.getActionCommand()));
+				tillDisplay.append("\n" + output);
+				currentOrder.add(menu.getItem(e.getActionCommand()));
+				orderTotal = orderTotal.add(menu.getItemCost(e.getActionCommand()));
+			} catch (NotOnMenuException e1) {
+
+				e1.printStackTrace();
+			}
+		} else {
+			throw new CreateNewCustomerException();
 		}
 
 	}

@@ -14,9 +14,9 @@ public class CoffeeShop {
 
 	LinkedList<MenuItem> ll;
 	
-	public CoffeeShop(){
+	public CoffeeShop() throws NotOnMenuException, CreateNewCustomerException{
 
-		Menu menu = new Menu("examplemenu.txt");
+		Menu menu = new Menu("exampleMenu.txt");
 		ll = new LinkedList<MenuItem>(); 
 
 		//MenuItem item;
@@ -67,7 +67,7 @@ public class CoffeeShop {
 				// create and add the item to a list
 				//MenuItem item = menu.getItem(data[0]);
 				
-				items.add(menu.getItem(data[0]));
+				items.add(menu.getItem(data[2]));
 			}
 			// check number of individual orders
 			
@@ -108,7 +108,7 @@ public class CoffeeShop {
 		}
 
 		CafeGUI test = new CafeGUI(menu);
-		test.setSize(600, 600);
+		test.setSize(600, 900);
 		test.setVisible(true);
 		
 	}
@@ -130,7 +130,7 @@ public class CoffeeShop {
 
 class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NotOnMenuException, CreateNewCustomerException {
 
 		CoffeeShop test = new CoffeeShop();
 

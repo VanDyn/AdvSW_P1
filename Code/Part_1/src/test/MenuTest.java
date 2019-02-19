@@ -7,14 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import main.Menu;
+import main.NotOnMenuException;
 
 
 public class MenuTest {
 
 	public Menu testMenu;
 
-	
-	
 	@Before
 	public void setup() {
 
@@ -25,7 +24,7 @@ public class MenuTest {
 	
 	
 	@Test
-	public void shouldReturnStringOfItemDetails() {
+	public void shouldReturnStringOfItemDetails() throws NotOnMenuException {
 		testMenu = new Menu("exampleMenu.txt");
 		
 		String test = "Americano";
