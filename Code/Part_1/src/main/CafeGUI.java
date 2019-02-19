@@ -20,6 +20,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 	// This is where the info will be drawn from
 	private Menu menu;
 	private ArrayList<MenuItem> drinks;
+	// ADD MORE ARRAYS HERE
 
 	// Buttons and fields for Panel 1
 	private JButton newCustomer;
@@ -82,6 +83,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 		menu = foodlist;
 		drinks = menu.getCategoryMembers("Coffee");
+		// ADD MORE ARRAYS HERE
 
 		drinksButtons = new JButton[drinks.size()];
 
