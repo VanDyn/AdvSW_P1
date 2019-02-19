@@ -210,7 +210,7 @@ public class Menu {
 		
 		while (itr.hasNext()) {
 			MenuItem temp = itr.next();
-			if (temp.getCategory().equals(description)) {
+			if (temp.getDescription().equals(description)) {
 				item = temp;
 				valid = true;
 			}
