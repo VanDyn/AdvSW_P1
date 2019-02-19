@@ -91,8 +91,8 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 		productButtons = new JButton[products.size()];
 
-		// Set up window title and ensure program ends on close, create a
-		// container and layout
+		// Set up window title and ensure program ends on close
+		// Create a container and layout
 		setTitle("Caffeine Addicts & Co");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container content = getContentPane();
@@ -231,7 +231,14 @@ public class CafeGUI extends JFrame implements ActionListener {
 		}
 
 	}
-
+	/**
+	 * Creates a new customer.
+	 * 
+	 * @throws OrderNotClosedException if an order is currently active.
+	 * 
+	 * @sets customerCreated to true.
+	 * @creates new temporary linked list for the order.
+	 */
 	private void createNewCustomer() throws OrderNotClosedException {
 
 		if (customerCreated == false) {
@@ -243,7 +250,14 @@ public class CafeGUI extends JFrame implements ActionListener {
 			throw new OrderNotClosedException();
 		}
 	}
-
+	
+	/**
+	 * Sets the totalled flag and prompts user
+	 * 
+	 * @throws SelectProductException if a function is selected before a product has been added to the order.
+	 * 
+	 * @sets totalled to true.
+	 */
 	private void setOrderTotalFlag() throws SelectProductException {
 
 		if (orderTotal.compareTo(zero) > 0) {
@@ -253,7 +267,13 @@ public class CafeGUI extends JFrame implements ActionListener {
 			throw new SelectProductException();
 		}
 	}
-
+	/**
+	 * Sets the cancelled flag and prompts the user
+	 * 
+	 * @throws SelectProductException if a function is selected before a product has been added to the order.
+	 * 
+	 * @sets cancelled to true
+	 */
 	private void setCancelOrderFlag() throws SelectProductException {
 		if (orderTotal.compareTo(zero) > 0) {
 			cancelled = true;
@@ -263,7 +283,13 @@ public class CafeGUI extends JFrame implements ActionListener {
 		}
 
 	}
-
+	/**
+	 * Sets the endOfDay flag and prompts the user
+	 * 
+	 * @throws NoOrdersPlacedException if no orders have been placed before the button is pressed.
+	 * 
+	 * @sets endOfDay to true
+	 */
 	private void setGrandTotalFlag() throws NoOrdersPlacedException {
 		if (grandTotal.compareTo(zero) > 0) {
 			endOfDay = true;
@@ -274,7 +300,20 @@ public class CafeGUI extends JFrame implements ActionListener {
 		}
 
 	}
-
+	
+	/**
+	 * Carries out functions based on which flags are set to true
+	 * 
+	 * @param e
+	 * @throws SelectFunctionException if the confirm button is pressed before a function is selected.
+	 * 
+	 * @total = @update grandTotal, @update orderTotal (reset), @update CoffeeShop @update flags (reset to false)
+	 * 
+	 * @cancel = @update orderTotal (reset), @update currentOrder (clear), @update flags (reset to false)
+	 * 
+	 * @grandTotal =  @update flags (reset to false) and prompt user
+	 * 
+	 */
 	private void confirmOrder(ActionEvent e) throws SelectFunctionException {
 		if (totalled == true || cancelled == true || endOfDay == true) {
 
@@ -317,7 +356,16 @@ public class CafeGUI extends JFrame implements ActionListener {
 			throw new SelectFunctionException();
 		}
 	}
-
+	
+	/**
+	 * Determines which product a button belongs to and updates the till display.
+	 * 
+	 * @param e
+	 * @throws CreateNewCustomerException
+	 * 
+	 * @updates currentOrder
+	 * @updates orderTotal
+	 */
 	private void selectProduct(ActionEvent e) throws CreateNewCustomerException {
 		if (customerCreated == true) {
 			try {
