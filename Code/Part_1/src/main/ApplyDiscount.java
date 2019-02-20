@@ -55,7 +55,7 @@ public class ApplyDiscount {
 	public ArrayList<String> getAvailableDiscounts(){
 		ArrayList<String> availableDiscounts = new ArrayList<String>();
 		availableDiscounts.add("Buy two Americanos get a third free");
-		availableDiscounts.add("Buy any two coffees get a free Blueberry muffin");
+		availableDiscounts.add("Buy any two coffees get a half price Blueberry muffin");
 		
 		return availableDiscounts;
 	}
@@ -80,7 +80,7 @@ public class ApplyDiscount {
 				coffeeCount++;
 			} if(muffinOrdered && (coffeeCount > 1)) { // If a muffin and two coffees have been ordered. Apply the discount
 				savings = muffinCost.multiply(discountOperator); 
-				appliedDiscounts.add("Buy two coffees get a free muffin");
+				appliedDiscounts.add("Buy any two coffees get a half price Blueberry muffin");
 			}
 		}
 		
@@ -103,13 +103,14 @@ public class ApplyDiscount {
 			if(orderedItems.get(i).getID().equals("COF101")){
 				discountedCount++;
 				itemCost = orderedItems.get(i).getCost();
-				appliedDiscounts.add("Buy two Americanos get a third free");
+				
 			}
 		}
 		
 		// apply buy 2 get 1 free
 		if(discountedCount > 2) { // If three Americanos have been ordered apply discount
 			savings = itemCost;
+			appliedDiscounts.add("Buy two Americanos get a third free");
 			
 		}
 		return savings;
