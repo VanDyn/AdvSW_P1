@@ -156,7 +156,7 @@ public class Menu {
 	 * order text file. This can be changed to only accept specific information
 	 * 
 	 * @param order
-	 *            item details
+	 *            item detail
 	 * @return true/false
 	 */
 	public boolean inMenu(MenuItem item) throws NotOnMenuException{
@@ -227,12 +227,15 @@ public class Menu {
 		
 		inMenu(item);
 		
+		
 		String description = item.getDescription();
+		System.out.println(description);
 		BigDecimal price = item.getCost();
 		String category = item.getCategory();
 		String id = item.getID();
 		
 		String itemDetails = description + ";" + price + ";" + category + ";" + id;
+		System.out.println(itemDetails);
 		return itemDetails;
 	}
 

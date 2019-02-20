@@ -104,7 +104,13 @@ public class MenuTest {
 		
 		assertEquals(details.trim(), testMenu.itemDetails(testItem2).trim());
 		
+//		MenuItem b = testMenu.getItem("Brownie");
+//		System.out.println(b.getDescription() + b.getCost() + b.getCategory() + b.getID());
+//	
+//		System.out.println(testMenu.itemDetails(testItem2));		
+//      assertTrue("True", testMenu.itemDetails(testItem2).equals(details));
 		
+		// help figure this out		
 	}
 }
 
