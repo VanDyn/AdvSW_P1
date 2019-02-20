@@ -38,20 +38,23 @@ public class ReportGenerator {
         items.add(new ItemSaleTracker(menuIterator.next()));
       }
 
+      System.out.print(ol.size());
       for (Order o: ol.values()){
         // check items against menu and keep running total of earnings
     	//  
     	// NOTE: Currently throws error when given empty orderList
         ListIterator<MenuItem> orderItems = o.getItemList().listIterator();
         while(orderItems.hasNext()){
-        	int i;
+        	MenuItem currentItem = orderItems.next();
+        	System.out.printf("Trying to look-up %s", currentItem.getDescription());
         	boolean found = false;
         	
         	// Need to look through Pairs, find item corresponding to one in order
         	// then increment quantity
-        	for (i = 0; found != true; i++) {
+        	for (int i = 0; i < items.size(); i++) {
         		ItemSaleTracker itemST = items.get(i);
-        		if (orderItems.next() == itemST.getItem()) {
+        		System.out.print(items.size());
+        		if (currentItem.getID().equals( itemST.getItem().getID() )) {
         			items.get(i).incByOne();
         			found = true;
         		}
