@@ -48,15 +48,21 @@ public class Menu {
 				String line = scan.nextLine();
 				data = line.split(";");
 
-				String ID = data[0];
-				double temp = Double.parseDouble(data[1]);
-				BigDecimal cost = new BigDecimal(temp);
-				cost = cost.setScale(2,BigDecimal.ROUND_DOWN);
-				String description = data[2];
-				String category = data[3];
+				String ID = data[2];
 				
-				MenuItem item = new MenuItem(ID, cost, description, category);
-				this.menu.add(item);
+				if(ID.length() == 6) {
+					double temp = Double.parseDouble(data[1]);
+					BigDecimal cost = new BigDecimal(temp);
+					cost = cost.setScale(2,BigDecimal.ROUND_DOWN);
+					String description = data[2];
+					String category = data[3];
+					
+					MenuItem item = new MenuItem(ID, cost, description, category);
+					this.menu.add(item);
+				}
+				
+				
+				
 
 			}
 
