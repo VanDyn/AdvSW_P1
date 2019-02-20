@@ -90,7 +90,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 		products.addAll(menu.getCategoryMembers("Bakery"));
 
 		productButtons = new JButton[products.size()];
-
+		
 		// Set up window title and ensure program ends on close
 		// Create a container and layout
 		setTitle("Caffeine Addicts & Co");
@@ -382,5 +382,8 @@ public class CafeGUI extends JFrame implements ActionListener {
 		}
 
 	}
+	
+	
+
 
 }
