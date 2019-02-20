@@ -11,12 +11,13 @@ import java.util.Scanner;
 public class CoffeeShop {
 
 	public static OrderList orderList = new OrderList();
+	public Menu menu;
 
 	LinkedList<MenuItem> ll;
 	
 	public CoffeeShop(){
 
-		Menu menu = new Menu("examplemenu.txt");
+		this.menu = new Menu("examplemenu.txt");
 		ll = new LinkedList<MenuItem>(); 
 
 		//MenuItem item;
@@ -133,6 +134,8 @@ class Test {
 	public static void main(String[] args) {
 
 		CoffeeShop test = new CoffeeShop();
+		ReportGenerator rg = new ReportGenerator();
+		rg.generateReport(test.orderList.getOrders(), test.menu.getMenu());
 
 	}
 }

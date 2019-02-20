@@ -1,3 +1,4 @@
+package main;
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.*;
@@ -14,7 +15,7 @@ public class ReportGenerator {
     dateFormat = new SimpleDateFormat("HH-mm-dd-MM-yy");
   }
 
-  public void generateReport(Map<Integer, Order> ol, HashSet<MenuItem> menu){
+  public void generateReport(Map<String, Order> ol, Collection<MenuItem> menu){
 
     // Filewriter for writing to txt file
     DataOutputStream dos;
@@ -39,6 +40,8 @@ public class ReportGenerator {
 
       for (Order o: ol.values()){
         // check items against menu and keep running total of earnings
+    	//  
+    	// NOTE: Currently throws error when given empty orderList
         ListIterator<MenuItem> orderItems = o.getItemList().listIterator();
         while(orderItems.hasNext()){
         	int i;
@@ -53,7 +56,7 @@ public class ReportGenerator {
         			found = true;
         		}
         	}
-        	total = total.add(o.getOrderTotal);
+        	total = total.add(BigDecimal.valueOf(o.getOrderTotal()));
         }
       }
 
