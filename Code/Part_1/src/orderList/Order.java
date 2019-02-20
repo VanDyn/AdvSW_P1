@@ -7,14 +7,20 @@ import java.util.LinkedList;
 public class Order implements Comparable<Order>
 {
 	private String timeStamp;
-	private String UniqueID;
 	private LinkedList<MenuItem> itemList;
+	private String ID;
 	
-	public Order(String custId, LinkedList<MenuItem> Items) //Strings in linkedList to be changed to object menuItem
+	public Order(LinkedList<MenuItem> Items) //Strings in linkedList to be changed to object menuItem
 	{	
 		this.itemList = Items;
 		this.timeStamp = this.makeTimeStamp();
-		this.UniqueID = custId;
+	}
+	
+	public Order(String custID, String tStamp, LinkedList<MenuItem> link){
+		this.ID = custID;
+		this.timeStamp = tStamp;
+		this.itemList = link;
+		
 	}
 	private String makeTimeStamp()
 	{
@@ -27,12 +33,12 @@ public class Order implements Comparable<Order>
 	{
 		return this.timeStamp;
 	}
-	public String getUniqueID()
-	{
-		return this.UniqueID;
+	public String getID() {
+		return this.ID;
 	}
 	public LinkedList<MenuItem> getItemList()
 	{
+		System.out.println(itemList.size());
 		return this.itemList;
 	}
 	public float getOrderTotal()
@@ -52,9 +58,11 @@ public class Order implements Comparable<Order>
 	
 	@Override
 	public int compareTo(Order arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(arg0.getID().equals(this.getID())) {
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 
 }
-
