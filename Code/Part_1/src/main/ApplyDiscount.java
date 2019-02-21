@@ -137,24 +137,46 @@ public class ApplyDiscount {
 		int drinkCount = 0;
 		int bakeryCount = 0;
 		
-		BigDecimal mealDealCost = new BigDecimal(0);
 		
-		for(MenuItem item : orderedItems) {
-			switch(item.getCategory()) {
+		int drink = 0;
+		int bakery = 0;
+		int sandwich = 0;
+		
+		BigDecimal mealDealCost = new BigDecimal(0);
+		BigDecimal deal = new BigDecimal(5);
+		
+		for(int i = 0;i<orderedItems.size();i++) {
+			switch(orderedItems.get(i).getCategory()) {
 			case "Sandwich" :
 				sandwichCount++;
+				sandwich = i;
 			case "Coffee" :
 				drinkCount++;
+				drink = i;
 			case "Tea" :
 				drinkCount++;
+				drink = i;
 			case "Bakery" :
-				drinkCount++;
+				bakeryCount++;
+				bakery = i;
+			}
+			
+			if(sandwichCount == 1 && drinkCount == 1 && bakeryCount == 1) {
+				
+				mealDealCost = (orderedItems.get(drink).getCost()).add(orderedItems.get(bakery).getCost()).add(orderedItems.get(sandwich).getCost());
+				
+				drink = drink - 1;
+				bakery = bakery - 1;
+				sandwich = sandwich - 1;
+				
+				savings = mealDealCost.subtract(deal);
+				
 			}
 		}
 		
 		
 		
-		return null;
+		return savings;
 	}
 	
 	 

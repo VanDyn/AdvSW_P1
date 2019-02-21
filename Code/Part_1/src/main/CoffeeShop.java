@@ -129,6 +129,10 @@ public class CoffeeShop {
 		report.generateReport(orderList.getOrders(),menu.getMenu());
 		
 	}
+	
+	public OrderList getOrderList() {
+		return orderList;
+	}
 }
 
 	//private void addToList(MenuItem item) {
