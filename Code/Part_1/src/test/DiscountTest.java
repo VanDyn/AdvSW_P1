@@ -19,7 +19,7 @@ public class DiscountTest {
 	
 	
 	@Test
-	public void twoCoffeesHalfPriceMuffinTest() throws NotOnMenuException {
+	public void twoCoffeesHalfPriceMuffinTest() throws NotOnMenuException { //Buy two drinks get a muffin half price
 		Menu menu = new Menu("exampleMenu.txt");
 		LinkedList<MenuItem> ll = new LinkedList<MenuItem>();
 		
@@ -54,7 +54,7 @@ public class DiscountTest {
 		assertEquals("5.950", (discount.getNewTotal()).toString());
 	}
 	@Test
-	public void twoAmericanoDiscountTest() throws NotOnMenuException {
+	public void twoAmericanoDiscountTest() throws NotOnMenuException { //Buy two americanos get one free
 		Menu menu = new Menu("exampleMenu.txt");
 		LinkedList<MenuItem> ll = new LinkedList<MenuItem>();
 		
