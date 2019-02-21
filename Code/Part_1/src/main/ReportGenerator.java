@@ -43,8 +43,6 @@ public class ReportGenerator {
       
       for(Order o: ol.values()){
         // check items against menu and keep running total of earnings
-    	//  
-    	// NOTE: Currently throws error when given empty orderList
         for(MenuItem m: o.getItemList()){
         	System.out.printf("Trying to look-up %s", m.getDescription());
         	boolean found = false;
@@ -95,6 +93,7 @@ public class ReportGenerator {
     }
   }
 
+  // Basic Pair class as Java has no native Pair class
   public class ItemSaleTracker{
     MenuItem item;
     int quantity;
