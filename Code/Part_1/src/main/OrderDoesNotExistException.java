@@ -1,4 +1,4 @@
-package orderList;
+package main;
 
 /**
  * Exception class that throws an error and informs user

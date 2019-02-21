@@ -9,7 +9,7 @@ import main.EmptyLinkedListException;
 import main.MenuItem;
 import main.NotOnMenuException;
 import main.Order;
-
+import main.OrderDoesNotExistException;
 
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class CoffeeShopTest {
 		
 	}
 	@Test
-	public void correctOrders() {
+	public void correctOrders() throws OrderDoesNotExistException {
 		
 		Order o1 = cShop.getOrderList().getOrder("O001");
 		

@@ -135,24 +135,6 @@ public class CoffeeShop {
 	}
 }
 
-	//private void addToList(MenuItem item) {
-	//	ll.add(item);
-	//}
-	//
-	//private void clearL() {
-	//	ll.clear();
-	//}
-
-
-
-class Test {
-
-	public static void main(String[] args) throws NotOnMenuException, CreateNewCustomerException, EmptyLinkedListException {
-
-		CoffeeShop test = new CoffeeShop();
-
-	}
-}
 
 
 
