@@ -24,11 +24,20 @@ public class ApplyDiscount {
 	ArrayList<String> appliedDiscounts;
 	
 	ApplyDiscount(LinkedList<MenuItem> ll, BigDecimal t){
-		this.appliedDiscounts = new ArrayList<String>();
-		this.orderedItems = ll;
-		this.currentTotal = t;
-		discountedTotal = new BigDecimal(0);
-		savings = new BigDecimal(0);
+		try {
+		if(ll.isEmpty()) {
+			throw new IllegalStateException();
+		}else {
+			this.appliedDiscounts = new ArrayList<String>();
+			this.orderedItems = ll;
+			this.currentTotal = t;
+			discountedTotal = new BigDecimal(0);
+			savings = new BigDecimal(0);
+		}
+		}catch(IllegalStateException e) {
+			System.out.println("Cannot Apply Discount to Empty Order");
+		}
+		
 	}
 	public ApplyDiscount(){
 		
@@ -119,7 +128,7 @@ public class ApplyDiscount {
 	}
 	
 	/**
-	 * Apply meal deal. Get and sandwich, drink, and baked good for £6
+	 * Apply meal deal. Get and sandwich, drink, and baked good for ï¿½6
 	 * @return
 	 */
 	private BigDecimal mealDeal() {
