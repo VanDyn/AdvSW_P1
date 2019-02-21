@@ -65,6 +65,10 @@ public class Order implements Comparable<Order>
 	{
 		return this.total;
 	}
+	public String getID()
+	{
+		return this.ID;
+	}
 	/**
 	 * Calculate the total cost in the order by querying the LinkedList
 	 * @return Total order cost
