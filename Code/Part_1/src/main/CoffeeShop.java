@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -113,8 +114,8 @@ public class CoffeeShop {
 		
 	}
 
-	public static void createOrder(LinkedList<MenuItem> items) {
-		Order order = new Order(items);
+	public static void createOrder(LinkedList<MenuItem> items, BigDecimal total) {
+		Order order = new Order(items,total);
 		orderList.addOrder(order);
 		System.out.println(orderList.getNumberOfOrders());
 	}
