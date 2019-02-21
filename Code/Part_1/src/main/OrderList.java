@@ -36,8 +36,9 @@ public class OrderList {
 	}
 	
 	//Return specific order using the order number
-	public Order getOrder(String orderNumber) {
-		return orderList.get(orderNumber);
+	public Order getOrder(String orderNumber) throws OrderDoesNotExistException {
+		if(orderList.get(orderNumber)!=null) return orderList.get(orderNumber);
+		else throw new OrderDoesNotExistException();
 	}
 	
 	public int getNumberOfOrders() {
