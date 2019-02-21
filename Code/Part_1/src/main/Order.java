@@ -19,7 +19,7 @@ public class Order implements Comparable<Order>
 		this.total = total;
 	}
 	
-	public Order(String custID, String tStamp, LinkedList<MenuItem> link){ //File read constructor
+	public Order(String custID, String tStamp, LinkedList<MenuItem> link) throws EmptyLinkedListException{ //File read constructor
 		this.ID = custID;
 		this.timeStamp = tStamp;
 		this.itemList = link;

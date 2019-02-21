@@ -321,10 +321,10 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 				tillDisplay.append("\n" + "Order total = �" + orderTotal);
 				grandTotal = grandTotal.add(orderTotal);
+				
+				CoffeeShop.createOrder(currentOrder, orderTotal); 
+				
 				orderTotal = zero;
-
-				CoffeeShop.createOrder(currentOrder, grandTotal);
-
 				currentOrder.clear();
 				customerCreated = false;
 				totalled = false;

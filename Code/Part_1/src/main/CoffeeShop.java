@@ -15,7 +15,7 @@ public class CoffeeShop {
 
 	LinkedList<MenuItem> ll;
 	
-	public CoffeeShop(){
+	public CoffeeShop() throws NotOnMenuException, CreateNewCustomerException, EmptyLinkedListException{
 
 		Menu menu = new Menu("examplemenu.txt");
 		ll = new LinkedList<MenuItem>(); 
@@ -131,7 +131,7 @@ public class CoffeeShop {
 
 class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NotOnMenuException, CreateNewCustomerException, EmptyLinkedListException {
 
 		CoffeeShop test = new CoffeeShop();
 
