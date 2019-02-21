@@ -110,7 +110,7 @@ public class CoffeeShop {
 		}
 
 		CafeGUI test = new CafeGUI(menu);
-		test.setSize(600, 600);
+		test.setSize(600, 800);
 		test.setVisible(true);
 		
 	}

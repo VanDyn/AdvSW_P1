@@ -81,7 +81,7 @@ public class ReportGenerator {
       while (allItemPairs.hasNext()) {
     	  // Write item ID, description and quantity ordered to file
     	  ItemSaleTracker thisItemPair = allItemPairs.next();
-    	  dos.writeUTF(String.format("%s1 %s2 %d", thisItemPair.getItem().getID(), 
+    	  dos.writeUTF(String.format("\n" + "%s1 %s2 %d", thisItemPair.getItem().getID(),
     			  thisItemPair.getItem().getDescription(), thisItemPair.getQuantity()));
       }
       // List total income
