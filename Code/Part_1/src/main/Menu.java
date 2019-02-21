@@ -245,5 +245,9 @@ public class Menu {
 	public int getMenuSize() {
 		return this.menu.size();
 	}
+	
+	public HashSet<MenuItem> getMenu(){
+		return menu;
+	}
 
 }

@@ -215,7 +215,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 		} else if (e.getSource() == confirm) {
 			try {
 				confirmOrder(e);
-			} catch (SelectFunctionException e1) {
+			} catch (SelectFunctionException | EmptyLinkedListException e1) {
 				e1.printStackTrace();
 				tillDisplay.append("\n" + "Please select a funtion first! Total, Cancel or Gross");
 			}
@@ -306,6 +306,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 	 * 
 	 * @param e
 	 * @throws SelectFunctionException if the confirm button is pressed before a function is selected.
+	 * @throws EmptyLinkedListException 
 	 * 
 	 * @total = @update grandTotal, @update orderTotal (reset), @update CoffeeShop @update flags (reset to false)
 	 * 
@@ -314,12 +315,12 @@ public class CafeGUI extends JFrame implements ActionListener {
 	 * @grandTotal =  @update flags (reset to false) and prompt user
 	 * 
 	 */
-	private void confirmOrder(ActionEvent e) throws SelectFunctionException {
+	private void confirmOrder(ActionEvent e) throws SelectFunctionException, EmptyLinkedListException {
 		if (totalled == true || cancelled == true || endOfDay == true) {
 
 			if ((customerCreated == true) && (totalled == true) && (orderTotal.compareTo(zero) > 0)) {
 
-				tillDisplay.append("\n" + "Order total = ï¿½" + orderTotal);
+				tillDisplay.append("\n" + "Order total = £" + orderTotal);
 				grandTotal = grandTotal.add(orderTotal);
 				
 				CoffeeShop.createOrder(currentOrder, orderTotal); 
@@ -347,8 +348,9 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 				tillDisplay.setText("\n" + "Todays takings are  £" + grandTotal);
 				
-				// ADD REPORT GENERATOR CALL HERE!
-
+				// Add report
+				CoffeeShop.generateReport();
+				
 				customerCreated = false;
 				totalled = false;
 				cancelled = false;

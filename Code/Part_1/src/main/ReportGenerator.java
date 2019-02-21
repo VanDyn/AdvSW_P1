@@ -17,6 +17,7 @@ public class ReportGenerator {
 
   public void generateReport(Map<String, Order> ol, Collection<MenuItem> menu) throws EmptyLinkedListException{
 
+
     // Filewriter for writing to txt file
     DataOutputStream dos;
     
@@ -60,6 +61,7 @@ public class ReportGenerator {
         		}
         	}
         	total = total.add(o.getOrderTotal());
+
         }
       }
 
