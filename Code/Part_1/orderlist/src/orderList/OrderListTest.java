@@ -37,7 +37,7 @@ class OrderListTest {
 	}
 	
 	@Test
-	void getOrderTest() {
+	void getOrderTest() throws OrderDoesNotExistException {
 		order.add(m1);
 		order.add(m2);
 		Order o = new Order("C001", order);
@@ -46,6 +46,7 @@ class OrderListTest {
 		order1.add(m3);
 		Order o2 = new Order("C002", order1);
 		ol.addOrder(o2);
+		ol.getOrder("C004");
 		assertEquals(ol.getOrder("O002"),o2);
 	}
 
