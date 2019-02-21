@@ -42,10 +42,11 @@ public class Order implements Comparable<Order>
 	}
 	public BigDecimal getOrderTotal() throws EmptyLinkedListException
 	{
-		BigDecimal orderTotal = null;
+		BigDecimal orderTotal = new BigDecimal(0);
 		int size = itemList.size();
 		for(int i=0;i<size;i++)
 			{
+				
 				orderTotal = orderTotal.add(this.itemList.get(i).getCost()); //wont work while objects are Strings. TODO implement item linkedlists
 			}
 		return orderTotal;

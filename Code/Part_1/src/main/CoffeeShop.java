@@ -69,7 +69,7 @@ public class CoffeeShop {
 				// create and add the item to a list
 				//MenuItem item = menu.getItem(data[0]);
 				
-				items.add(menu.getItem(data[0]));
+				items.add(menu.getItem(data[2]));
 			}
 			// check number of individual orders
 			
