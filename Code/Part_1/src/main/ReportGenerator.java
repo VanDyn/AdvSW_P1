@@ -19,7 +19,7 @@ public class ReportGenerator {
 
 
     // Filewriter for writing to txt file
-    DataOutputStream dos;
+    PrintStream ps;
     
     try {
       
@@ -39,23 +39,17 @@ public class ReportGenerator {
         items.add(new ItemSaleTracker(menuIterator.next()));
       }
 
-      System.out.print(ol.size());
-      for (Order o: ol.values()){
+     
+      for(Order o: ol.values()){
         // check items against menu and keep running total of earnings
-    	//  
-    	// NOTE: Currently throws error when given empty orderList
-        ListIterator<MenuItem> orderItems = o.getItemList().listIterator();
-        while(orderItems.hasNext()){
-        	MenuItem currentItem = orderItems.next();
-        	System.out.printf("Trying to look-up %s", currentItem.getDescription());
+        for(MenuItem m: o.getItemList()){
         	boolean found = false;
         	
         	// Need to look through Pairs, find item corresponding to one in order
         	// then increment quantity
-        	for (int i = 0; i < items.size(); i++) {
+        	for (int i = 0; ( i < items.size() ) && !found ; i++) {
         		ItemSaleTracker itemST = items.get(i);
-        		System.out.print(items.size());
-        		if (currentItem.getID().equals( itemST.getItem().getID() )) {
+        		if (m.getID().equals( itemST.getItem().getID() )) {
         			items.get(i).incByOne();
         			found = true;
         		}
@@ -71,31 +65,33 @@ public class ReportGenerator {
       String fileName = String.format( "log-%s.txt", dateString );
       File logFile = new File(fileName);
       
-      dos = new DataOutputStream( new FileOutputStream( logFile ) );
+      ps = new PrintStream( new FileOutputStream( logFile ) );
       
       // Title for file
-      dos.writeUTF( String.format( "Log File for %s", dateString ) );
+      ps.println( String.format( "Log File for %s", dateString ) );
       
+      ps.println("Item ID -- Item Description -- Quantity Ordered");
       
       Iterator<ItemSaleTracker> allItemPairs = items.listIterator();
       while (allItemPairs.hasNext()) {
     	  // Write item ID, description and quantity ordered to file
     	  ItemSaleTracker thisItemPair = allItemPairs.next();
-    	  dos.writeUTF(String.format("\n" + "%s1 %s2 %d", thisItemPair.getItem().getID(),
+    	  ps.println(String.format("%s %s %d", thisItemPair.getItem().getID(), 
     			  thisItemPair.getItem().getDescription(), thisItemPair.getQuantity()));
       }
       // List total income
       
-      dos.writeUTF(String.format("Total Daily Earnings: %s", total.toString()));
+      ps.println(String.format("Total Daily Earnings: %s", total.toString()));
       
       // close dataStream
-      dos.close();
+      ps.close();
       
     } catch (IOException e){
     	System.out.println("Exception");
     }
   }
 
+  // Basic Pair class as Java has no native Pair class
   public class ItemSaleTracker{
     MenuItem item;
     int quantity;
@@ -114,7 +110,7 @@ public class ReportGenerator {
     }
     
     public void incByOne() {
-    	quantity += 1;
+    	quantity = quantity + 1;
     }
 
     public MenuItem getItem(){
