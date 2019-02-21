@@ -15,7 +15,7 @@ public class ReportGenerator {
     dateFormat = new SimpleDateFormat("HH-mm-dd-MM-yy");
   }
 
-  public void generateReport(Map<String, Order> ol, Collection<MenuItem> menu){
+  public void generateReport(Map<String, Order> ol, Collection<MenuItem> menu) throws EmptyLinkedListException{
 
     // Filewriter for writing to txt file
     DataOutputStream dos;
@@ -59,7 +59,7 @@ public class ReportGenerator {
         			found = true;
         		}
         	}
-        	total = total.add(BigDecimal.valueOf(o.getOrderTotal()));
+        	total = total.add(o.getOrderTotal());
         }
       }
 

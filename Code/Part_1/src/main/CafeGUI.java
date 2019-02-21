@@ -345,7 +345,9 @@ public class CafeGUI extends JFrame implements ActionListener {
 			} else if ((grandTotal.compareTo(zero) > 0) && (endOfDay == true)) {
 				tillDisplay.setText(null);
 
-				tillDisplay.setText("\n" + "Todays takings are  ï¿½" + grandTotal);
+				tillDisplay.setText("\n" + "Todays takings are  £" + grandTotal);
+				
+				// ADD REPORT GENERATOR CALL HERE!
 
 				customerCreated = false;
 				totalled = false;
