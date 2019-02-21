@@ -199,6 +199,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 			try {
 				setOrderTotalFlag();
+
 			} catch (SelectProductException e1) {
 
 				e1.printStackTrace();
@@ -210,6 +211,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 			try {
 				setCancelOrderFlag();
+
 			} catch (SelectProductException e1) {
 
 				e1.printStackTrace();
@@ -218,7 +220,13 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 		} else if (e.getSource() == discount) {
 
-			setDiscount();
+			try {
+				setDiscount();
+			} catch (CreateNewCustomerException e1) {
+
+				e1.printStackTrace();
+				tillDisplay.append("\n" + "Please create a new customer first!");
+			}
 
 		} else if (e.getSource() == availableDiscounts) {
 
@@ -317,21 +325,28 @@ public class CafeGUI extends JFrame implements ActionListener {
 	/**
 	 * Calls the checkForDiscounts method from Discount class and applies a
 	 * discount if the current order is eligible
+	 * 
+	 * @throws CreateNewCustomerException
 	 */
-	private void setDiscount() {
+	private void setDiscount() throws CreateNewCustomerException {
 
-		ApplyDiscount appliedDiscount = new ApplyDiscount(currentOrder, orderTotal);
-		Discount d = appliedDiscount.checkForDiscounts();
+		if (customerCreated == true) {
 
-		if (orderTotal.equals(d.getNewTotal())) {
+			ApplyDiscount appliedDiscount = new ApplyDiscount(currentOrder, orderTotal);
+			Discount d = appliedDiscount.checkForDiscounts();
 
-			tillDisplay.append("NO DISCOUNTS HERE!");
+			if (orderTotal.equals(d.getNewTotal())) {
 
+				tillDisplay.append("\n" + "NO DISCOUNTS HERE!");
+
+			} else {
+				orderTotal = d.getNewTotal();
+				BigDecimal savings = d.getSavings();
+
+				tillDisplay.append("\n" + "Congratulations, you have saved £" + savings);
+			}
 		} else {
-			orderTotal = d.getNewTotal();
-			BigDecimal savings = d.getSavings();
-
-			tillDisplay.append("\n" + "Congratulations, you have saved £" + savings);
+			throw new CreateNewCustomerException();
 		}
 	}
 

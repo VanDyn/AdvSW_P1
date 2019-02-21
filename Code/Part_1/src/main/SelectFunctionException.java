@@ -2,7 +2,7 @@ package main;
 
 /**
  * Exception class which throws an error if the confirm button is pressed before
- * a function such as Total or Cancel has been selected
+ * a function such as Total or Cancel has been selected.
  * 
  * @author ShayneShaw
  *

@@ -2,7 +2,7 @@ package main;
 
 /**
  * Exception class which throws an error if a product is selected before
- * a new customer has been created .
+ * a new customer has been created.
  * 
  * @author ShayneShaw
  *
