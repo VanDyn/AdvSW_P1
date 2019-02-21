@@ -22,6 +22,7 @@ public class OrderList {
 		apdOrdNum = apdOrdNum + orderNumber;
 		orderList.put(apdOrdNum, order);
 		orderNumber++;
+		System.out.println(order.getItemList().get(0).getDescription());
 	}
 	
 	//Print all orders and return map of all orders placed
