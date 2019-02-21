@@ -434,7 +434,6 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 				tillDisplay.setText("\n" + "Todays takings are  £" + grandTotal);
 
-				// Add report
 				CoffeeShop.generateReport();
 
 				customerCreated = false;
