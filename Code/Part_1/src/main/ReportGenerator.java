@@ -1,3 +1,4 @@
+package main;
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.*;
@@ -14,10 +15,11 @@ public class ReportGenerator {
     dateFormat = new SimpleDateFormat("HH-mm-dd-MM-yy");
   }
 
-  public void generateReport(Map<Integer, Order> ol, HashSet<MenuItem> menu){
+  public void generateReport(Map<String, Order> ol, Collection<MenuItem> menu) throws EmptyLinkedListException{
+
 
     // Filewriter for writing to txt file
-    DataOutputStream dos;
+    PrintStream ps;
     
     try {
       
@@ -37,23 +39,23 @@ public class ReportGenerator {
         items.add(new ItemSaleTracker(menuIterator.next()));
       }
 
-      for (Order o: ol.values()){
+     
+      for(Order o: ol.values()){
         // check items against menu and keep running total of earnings
-        ListIterator<MenuItem> orderItems = o.getItemList().listIterator();
-        while(orderItems.hasNext()){
-        	int i;
+        for(MenuItem m: o.getItemList()){
         	boolean found = false;
         	
         	// Need to look through Pairs, find item corresponding to one in order
         	// then increment quantity
-        	for (i = 0; found != true; i++) {
+        	for (int i = 0; ( i < items.size() ) && !found ; i++) {
         		ItemSaleTracker itemST = items.get(i);
-        		if (orderItems.next() == itemST.getItem()) {
+        		if (m.getID().equals( itemST.getItem().getID() )) {
         			items.get(i).incByOne();
         			found = true;
         		}
         	}
-        	total = total.add(o.getOrderTotal);
+        	total = total.add(o.getOrderTotal());
+
         }
       }
 
@@ -63,31 +65,33 @@ public class ReportGenerator {
       String fileName = String.format( "log-%s.txt", dateString );
       File logFile = new File(fileName);
       
-      dos = new DataOutputStream( new FileOutputStream( logFile ) );
+      ps = new PrintStream( new FileOutputStream( logFile ) );
       
       // Title for file
-      dos.writeUTF( String.format( "Log File for %s", dateString ) );
+      ps.println( String.format( "Log File for %s", dateString ) );
       
+      ps.println("Item ID -- Item Description -- Quantity Ordered");
       
       Iterator<ItemSaleTracker> allItemPairs = items.listIterator();
       while (allItemPairs.hasNext()) {
     	  // Write item ID, description and quantity ordered to file
     	  ItemSaleTracker thisItemPair = allItemPairs.next();
-    	  dos.writeUTF(String.format("%s1 %s2 %d", thisItemPair.getItem().getID(), 
+    	  ps.println(String.format("%s %s %d", thisItemPair.getItem().getID(), 
     			  thisItemPair.getItem().getDescription(), thisItemPair.getQuantity()));
       }
       // List total income
       
-      dos.writeUTF(String.format("Total Daily Earnings: %s", total.toString()));
+      ps.println(String.format("Total Daily Earnings: %s", total.toString()));
       
       // close dataStream
-      dos.close();
+      ps.close();
       
     } catch (IOException e){
     	System.out.println("Exception");
     }
   }
 
+  // Basic Pair class as Java has no native Pair class
   public class ItemSaleTracker{
     MenuItem item;
     int quantity;
@@ -106,7 +110,7 @@ public class ReportGenerator {
     }
     
     public void incByOne() {
-    	quantity += 1;
+    	quantity = quantity + 1;
     }
 
     public MenuItem getItem(){

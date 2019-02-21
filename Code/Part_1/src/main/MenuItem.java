@@ -13,7 +13,7 @@ public class MenuItem {
   private String description;
   private String category;
 
-  MenuItem(String id, BigDecimal cost, String description, String category){
+  public MenuItem(String id, BigDecimal cost, String description, String category){
     this.id = id;
     this.cost = cost;
     this.description = description;

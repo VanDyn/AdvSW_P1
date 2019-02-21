@@ -23,7 +23,7 @@ public class Menu {
 	 * 
 	 * EX. Unique ID: COF101
 	 * 
-	 * COF - Coffee TEA - Tea JUI - Juice SDW - Sandwich PST - Pastries
+	 * COF - Coffee TEA - Tea JUI - Juice SND - Sandwich BAK - Bakery
 	 * 
 	 */
 	private HashSet<MenuItem> menu;
@@ -49,13 +49,20 @@ public class Menu {
 				data = line.split(";");
 
 				String ID = data[0];
-				double temp = Double.parseDouble(data[1]);
-				BigDecimal cost = new BigDecimal(temp);
-				String description = data[2];
-				String category = data[3];
-
-				MenuItem item = new MenuItem(ID, cost, description, category);
-				this.menu.add(item);
+				
+				if(ID.length() == 6) {
+					double temp = Double.parseDouble(data[1]);
+					BigDecimal cost = new BigDecimal(temp);
+					cost = cost.setScale(2,BigDecimal.ROUND_DOWN);
+					String description = data[2];
+					String category = data[3];
+					
+					MenuItem item = new MenuItem(ID, cost, description, category);
+					this.menu.add(item);
+				}
+				
+				
+				
 
 			}
 
@@ -74,23 +81,24 @@ public class Menu {
 	 * @return returns [data structure or string with delimiter] with all item
 	 *         details
 	 */
-	public String newItemDetails(String description) {
+	public String newItemDetails(String description) throws NotOnMenuException {
 
 		String items = new String();
 		Iterator<MenuItem> itr = this.menu.iterator();
-
+		Boolean valid = false;
+		
 		// loop through each member of menu set.
 		while (itr.hasNext()) {
 			MenuItem item = itr.next();
 
 			if (item.getDescription().equals(description)) {
-
 				items = itemDetails(item);
+				valid = true;
 			}
 
 		}
-
-		return items;
+		if(valid) {return items;}
+		else {throw new NotOnMenuException("Description",description);}		
 	}
 
 	/**
@@ -104,17 +112,18 @@ public class Menu {
 	 *            category to return details of
 	 * @return
 	 */
-	public ArrayList<String> getCategoryDetails(String category) {
+	public ArrayList<String> getCategoryDetails(String category) throws NotOnMenuException {
 
 		ArrayList<String> itemDeets = new ArrayList<String>();
 		ArrayList<MenuItem> categoryItems = getCategoryMembers(category);
-
+		
 		// loop through each member of menu set.
 
 		for (MenuItem item : categoryItems) {
 			itemDeets.add(itemDetails(item));
 		}
-
+		if(itemDeets.size() == 0) throw new NotOnMenuException("Category", category);
+		
 		return itemDeets;
 	}
 
@@ -127,21 +136,25 @@ public class Menu {
 	 *            Specify which category to retrieve members from
 	 * @return ArrayList of item objects
 	 */
-	public ArrayList<MenuItem> getCategoryMembers(String category) {
+	public ArrayList<MenuItem> getCategoryMembers(String category) throws NotOnMenuException{
 
 		ArrayList<MenuItem> items = new ArrayList<MenuItem>();
 		Iterator<MenuItem> itr = this.menu.iterator();
-
+		Boolean valid = false;
+		
 		// loop through each member of menu set.
 		while (itr.hasNext()) {
 			MenuItem item = itr.next();
 
 			if (item.getCategory().equals(category)) {
 				items.add(item);
+				valid = true;
 			}
 		}
+		if(valid) {return items;}
+		else {throw new NotOnMenuException("Category", category);}
 
-		return items;
+		
 	}
 
 	/**
@@ -152,15 +165,15 @@ public class Menu {
 	 *            item details
 	 * @return true/false
 	 */
-	public boolean inMenu(MenuItem item) {
+	public boolean inMenu(MenuItem item) throws NotOnMenuException{
 
 		// MenuItem tempItem = new MenuItem(description,price,category,ID);
 		boolean valid = false;
 
 		if (menu.contains(item)) {
 			valid = true;
-		}
-
+		}else {throw new NotOnMenuException("MenuItem", item.getDescription());}
+		
 		return valid;
 	}
 
@@ -171,18 +184,21 @@ public class Menu {
 	 *            items description
 	 * @return cost specified items cost
 	 */
-	public BigDecimal getItemCost(String description) {
+	public BigDecimal getItemCost(String description) throws NotOnMenuException{
 		Iterator<MenuItem> itr = this.menu.iterator();
 		BigDecimal cost = new BigDecimal(0);
-
+		Boolean valid = false;
+		
 		while (itr.hasNext()) {
 			MenuItem item = itr.next();
 			if (item.getDescription().equals(description)) {
 				cost = item.getCost();
+				valid = true;
 			}
 		}
-		return cost.setScale(2,BigDecimal.ROUND_DOWN);
-		//return cost;
+		
+		if(valid) {return cost.setScale(2,BigDecimal.ROUND_DOWN);}
+		else { throw new NotOnMenuException("Description", description);}
 	}
 
 	/**
@@ -192,40 +208,46 @@ public class Menu {
 	 *            MenuItems Category
 	 * @return MenuItem
 	 */
-	public MenuItem getItem(String description) {
+	public MenuItem getItem(String description) throws NotOnMenuException {
 
 		MenuItem item = null;
 		Iterator<MenuItem> itr = this.menu.iterator();
-
+		Boolean valid = false;
+		
 		while (itr.hasNext()) {
 			MenuItem temp = itr.next();
-			if (temp.getCategory().equals(description)) {
+			if (temp.getDescription().equals(description)) {
 				item = temp;
+				valid = true;
 			}
 		}
-
-		return item;
+		if(valid) {return item;}
+		else { throw new NotOnMenuException("Description", description);}
+		
 	}
 
 	/**
 	 * Return a string of an items details.
 	 */
-	public String itemDetails(MenuItem item) {
-
+	public String itemDetails(MenuItem item) throws NotOnMenuException {
+		
+		inMenu(item);
+		
 		String description = item.getDescription();
 		BigDecimal price = item.getCost();
 		String category = item.getCategory();
 		String id = item.getID();
-
+		
 		String itemDetails = description + ";" + price + ";" + category + ";" + id;
-
-		// System.out.println(itemDetails);
-
 		return itemDetails;
 	}
 
 	public int getMenuSize() {
 		return this.menu.size();
+	}
+	
+	public HashSet<MenuItem> getMenu(){
+		return menu;
 	}
 
 }

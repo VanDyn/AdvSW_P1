@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -11,12 +12,13 @@ import java.util.Scanner;
 public class CoffeeShop {
 
 	public static OrderList orderList = new OrderList();
+	public static Menu menu;
 
 	LinkedList<MenuItem> ll;
 	
-	public CoffeeShop(){
+	public CoffeeShop() throws NotOnMenuException, CreateNewCustomerException, EmptyLinkedListException{
 
-		Menu menu = new Menu("examplemenu.txt");
+		menu = new Menu("examplemenu.txt");
 		ll = new LinkedList<MenuItem>(); 
 
 		//MenuItem item;
@@ -64,16 +66,8 @@ public class CoffeeShop {
 				String line = itemDetails.get(i);
 				data = line.split(";");
 
-				// create and add the item to a list
-				//MenuItem item = menu.getItem(data[0]);
-				
-				items.add(menu.getItem(data[0]));
+				items.add(menu.getItem(data[2]));
 			}
-			// check number of individual orders
-			
-// -------------------------------------------------------------------------------------------------
-//			Working up to here
-// -------------------------------------------------------------------------------------------------	
 
 			String prev = null;
 			String curr = null;
@@ -86,14 +80,14 @@ public class CoffeeShop {
 
 				if(curr.equals(prev) || prev == null) {
 					ll.add(items.get(i));
-				//	System.out.println(menu.itemDetails(items.get(i)));
+				
 				}else {
 					Order order = new Order(prev,idTime[i-1][0],ll);
 					orderList.addOrder(order);
-					//orderList.createOrder(ll, prev, idTime[i][0]);
+					
 					ll.clear();
 					ll.add(items.get(i));
-			//		System.out.println(menu.itemDetails(items.get(i)));
+		
 
 				}
 				if(i == (idTime.length - 1)) {
@@ -108,32 +102,28 @@ public class CoffeeShop {
 		}
 
 		CafeGUI test = new CafeGUI(menu);
-		test.setSize(600, 600);
+		test.setSize(600, 800);
 		test.setVisible(true);
 		
 	}
 
-	public static void createOrder(LinkedList<MenuItem> items) {
-		Order order = new Order(items);
+	public static void createOrder(LinkedList<MenuItem> items, BigDecimal total) {
+		Order order = new Order(items,total);
 		orderList.addOrder(order);
 		System.out.println(orderList.getNumberOfOrders());
 	}
-}
-
-	//private void addToList(MenuItem item) {
-	//	ll.add(item);
-	//}
-	//
-	//private void clearL() {
-	//	ll.clear();
-	//}
-
-class Test {
-
-	public static void main(String[] args) {
-
-		CoffeeShop test = new CoffeeShop();
-
+	
+	
+	
+	public static void generateReport() throws EmptyLinkedListException {
+		
+		ReportGenerator report = new ReportGenerator();
+		report.generateReport(orderList.getOrders(),menu.getMenu());
+		
+	}
+	
+	public OrderList getOrderList() {
+		return orderList;
 	}
 }
 
