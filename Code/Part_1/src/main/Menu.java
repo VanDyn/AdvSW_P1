@@ -48,7 +48,7 @@ public class Menu {
 				String line = scan.nextLine();
 				data = line.split(";");
 
-				String ID = data[2];
+				String ID = data[0];
 				
 				if(ID.length() == 6) {
 					double temp = Double.parseDouble(data[1]);
