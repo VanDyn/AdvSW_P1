@@ -1,4 +1,10 @@
-package main;
+/**
+ * Test Order class
+ * 
+ * @author Alex Birks
+ */
+
+package test;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import org.junit.Test;
+
+import main.MenuItem;
+import main.Order;
 
 public class OrderTest {
 	

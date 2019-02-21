@@ -1,3 +1,11 @@
+/**
+ * Orderlist class. Instantiates a LinkedList which is appended with orders.
+ * Called by coffeeshop and only instantiated once. 
+ * 
+ * @author Alex Birks
+ */
+
+
 package main;
 
 import java.util.*;
@@ -13,7 +21,7 @@ public class OrderList {
 		orderNumber = 0;
 	}
 	
-	//Place an order 
+	//Add order to orderlist
 	public void addOrder(Order order) {
 	
 		if(orderNumber < 10) apdOrdNum = "O00";
@@ -41,6 +49,7 @@ public class OrderList {
 		else throw new OrderDoesNotExistException();
 	}
 	
+	//Return number of orders
 	public int getNumberOfOrders() {
 		return orderList.size();
 	}

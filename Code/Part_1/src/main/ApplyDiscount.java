@@ -23,7 +23,7 @@ public class ApplyDiscount {
 	private BigDecimal savings;
 	ArrayList<String> appliedDiscounts;
 	
-	ApplyDiscount(LinkedList<MenuItem> ll, BigDecimal t){
+	public ApplyDiscount(LinkedList<MenuItem> ll, BigDecimal t){
 		try {
 		if(ll.isEmpty()) {
 			throw new IllegalStateException();

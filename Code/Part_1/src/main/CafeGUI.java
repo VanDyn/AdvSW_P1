@@ -357,11 +357,12 @@ public class CafeGUI extends JFrame implements ActionListener {
 	private void printAvilableDiscounts() {
 		ApplyDiscount appliedDiscount = new ApplyDiscount();
 		ArrayList<String> d = appliedDiscount.getAvailableDiscounts();
-
+		
+		tillDisplay.append("\n" + "********************************");
 		for (counter = 0; counter < d.size(); counter++) {
 			tillDisplay.append("\n" + d.get(counter));
 		}
-
+		tillDisplay.append("\n" + "********************************");
 	}
 
 	/**
