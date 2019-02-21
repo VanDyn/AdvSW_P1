@@ -66,16 +66,8 @@ public class CoffeeShop {
 				String line = itemDetails.get(i);
 				data = line.split(";");
 
-				// create and add the item to a list
-				//MenuItem item = menu.getItem(data[0]);
-				
 				items.add(menu.getItem(data[2]));
 			}
-			// check number of individual orders
-			
-// -------------------------------------------------------------------------------------------------
-//			Working up to here
-// -------------------------------------------------------------------------------------------------	
 
 			String prev = null;
 			String curr = null;
@@ -88,14 +80,14 @@ public class CoffeeShop {
 
 				if(curr.equals(prev) || prev == null) {
 					ll.add(items.get(i));
-				//	System.out.println(menu.itemDetails(items.get(i)));
+				
 				}else {
 					Order order = new Order(prev,idTime[i-1][0],ll);
 					orderList.addOrder(order);
-					//orderList.createOrder(ll, prev, idTime[i][0]);
+					
 					ll.clear();
 					ll.add(items.get(i));
-			//		System.out.println(menu.itemDetails(items.get(i)));
+		
 
 				}
 				if(i == (idTime.length - 1)) {
