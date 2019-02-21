@@ -12,12 +12,13 @@ import java.util.Scanner;
 public class CoffeeShop {
 
 	public static OrderList orderList = new OrderList();
+	Menu menu;
 
 	LinkedList<MenuItem> ll;
 	
 	public CoffeeShop() throws NotOnMenuException, CreateNewCustomerException, EmptyLinkedListException{
 
-		Menu menu = new Menu("examplemenu.txt");
+		menu = new Menu("examplemenu.txt");
 		ll = new LinkedList<MenuItem>(); 
 
 		//MenuItem item;
@@ -119,6 +120,15 @@ public class CoffeeShop {
 		orderList.addOrder(order);
 		System.out.println(orderList.getNumberOfOrders());
 	}
+	
+	
+	
+	public void generateReport() throws EmptyLinkedListException {
+		
+		ReportGenerator report = new ReportGenerator();
+		report.generateReport(orderList.getOrders(),menu.getMenu());
+		
+	}
 }
 
 	//private void addToList(MenuItem item) {
@@ -129,14 +139,16 @@ public class CoffeeShop {
 	//	ll.clear();
 	//}
 
-class Test {
 
-	public static void main(String[] args) throws NotOnMenuException, CreateNewCustomerException, EmptyLinkedListException {
 
-		CoffeeShop test = new CoffeeShop();
-
-	}
-}
+//class Test {
+//
+//	public static void main(String[] args) throws NotOnMenuException, CreateNewCustomerException, EmptyLinkedListException {
+//
+//		CoffeeShop test = new CoffeeShop();
+//
+//	}
+//}
 
 
 
