@@ -320,7 +320,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 
 			if ((customerCreated == true) && (totalled == true) && (orderTotal.compareTo(zero) > 0)) {
 
-				tillDisplay.append("\n" + "Order total = ï¿½" + orderTotal);
+				tillDisplay.append("\n" + "Order total = £" + orderTotal);
 				grandTotal = grandTotal.add(orderTotal);
 				
 				CoffeeShop.createOrder(currentOrder, orderTotal); 
@@ -346,7 +346,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 			} else if ((grandTotal.compareTo(zero) > 0) && (endOfDay == true)) {
 				tillDisplay.setText(null);
 
-				tillDisplay.setText("\n" + "Todays takings are  ï¿½" + grandTotal);
+				tillDisplay.setText("\n" + "Todays takings are  £" + grandTotal);
 				
 				// Add report
 				CoffeeShop.generateReport();
